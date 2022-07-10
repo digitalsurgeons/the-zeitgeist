@@ -1,8 +1,14 @@
-import type { NextPage } from 'next'
+import { NextPage } from 'next'
 import Head from 'next/head'
+import clientPromise from '../lib/mongodb'
 import { FaTwitter, FaInstagram, FaDiscord } from 'react-icons/fa'
 
-const Home: NextPage = () => {
+type HomeProps = {
+  isConnected: boolean
+}
+
+const Home: NextPage<HomeProps> = ({ isConnected }) => {
+  console.log('isConnected', isConnected)
   return (
     <>
       <Head>
@@ -141,3 +147,28 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getServerSideProps() {
+  try {
+    const client = await clientPromise
+    const db = await client.db()
+
+    const movies = await db
+      .collection('movies')
+      .find({})
+      .sort({ metacritic: -1 })
+      .limit(20)
+      .toArray()
+
+    console.log(movies)
+
+    return {
+      props: { isConnected: true },
+    }
+  } catch (e) {
+    console.error(e)
+    return {
+      props: { isConnected: false },
+    }
+  }
+}
