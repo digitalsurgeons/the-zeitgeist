@@ -53,7 +53,9 @@ export const generateKeywords = async () => {
 export const generatePrompt = async (keywords: string[]) => {
   const response = await openai.createCompletion({
     model: 'text-davinci-002',
-    prompt: `Short story using the following words.\n\n${keywords.join(',')}`,
+    prompt: `Futuristic sci-fi landscape based on following words.\n\n${keywords.join(
+      ','
+    )}`,
     temperature: 0.7,
     max_tokens: 256,
     top_p: 1,
