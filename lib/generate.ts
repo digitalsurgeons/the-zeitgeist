@@ -1,6 +1,7 @@
 require('dotenv').config()
 const { Configuration, OpenAIApi } = require('openai')
 const emojiStrip = require('emoji-strip')
+const googleTrends = require('google-trends-api')
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -8,8 +9,20 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 export const generateKeywords = async () => {
-  const twitterTrendsReq = await fetch(
-    'https://api.twitter.com/1.1/trends/place.json?id=2458410',
+  const trendReq = await googleTrends.dailyTrends({
+    trendDate: new Date('2022-07-10'),
+    geo: 'US',
+  })
+
+  const trendJSON = JSON.parse(trendReq)
+
+  const trend =
+    trendJSON.default.trendingSearchesDays[0].trendingSearches[0].title.query
+
+  console.log(trend)
+
+  const twitterTweetsReq = await fetch(
+    `https://api.twitter.com/1.1/search/tweets.json?q=${trend}&exclude=hashtags&count=100&result_type=popular`,
     {
       headers: new Headers({
         Authorization: `Bearer ${process.env.TWITTER_API_BEARER}`,
@@ -17,25 +30,19 @@ export const generateKeywords = async () => {
     }
   )
 
-  const twitterTrends = await twitterTrendsReq.json()
+  console.log(
+    `https://api.twitter.com/1.1/search/tweets.json?q=${trend}&exclude=hashtags&count=100&result_type=popular`
+  )
 
-  const twitterDataFormatted = twitterTrends[0].trends
-    .map(
-      (item: {
-        name: string
-        url: string
-        promoted_content: any
-        query: string
-        tweet_volume: number
-      }) => item.name
-    )
-    .join(',')
+  const twitterTweets = await twitterTweetsReq.json()
 
-  const twitterDataSafe = emojiStrip(twitterDataFormatted.replaceAll('#', ''))
+  const twitterTweetsFormatted = twitterTweets.statuses
+    .map((item: any) => item.text)
+    .join(' ')
 
   const response = await openai.createCompletion({
     model: 'text-davinci-002',
-    prompt: `Extract keywords from this text:\n\n${twitterDataSafe}\n\n`,
+    prompt: `Extract list of keywords from this text:\n\n${twitterTweetsFormatted}\n\n`,
     temperature: 0.3,
     max_tokens: 60,
     top_p: 1,
@@ -44,18 +51,16 @@ export const generateKeywords = async () => {
   })
 
   const responseSplit = response.data.choices[0].text
-    .replaceAll('\n', '')
-    .split('-')
+    .replace(/\n|-/g, ' ')
+    .trim()
 
   return responseSplit
 }
 
-export const generatePrompt = async (keywords: string[]) => {
+export const generatePrompt = async (keywords: string) => {
   const response = await openai.createCompletion({
     model: 'text-davinci-002',
-    prompt: `Futuristic sci-fi landscape based on following words.\n\n${keywords.join(
-      ','
-    )}`,
+    prompt: `Describe an amazing scene based on following words.\n\n${keywords}`,
     temperature: 0.7,
     max_tokens: 256,
     top_p: 1,
