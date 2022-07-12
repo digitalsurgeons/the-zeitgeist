@@ -36,7 +36,7 @@ const Image: NextPage = () => {
           {Array.isArray(generatedImages?.result) && (
             <div className="flex flex-col">
               {generatedImages.result.map((img, index) => {
-                return <img src={img.generation.image_path} />
+                return <img key={index} src={img.generation.image_path} />
               })}
             </div>
           )}
