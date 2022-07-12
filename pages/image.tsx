@@ -7,10 +7,9 @@ const Image: NextPage = () => {
   const [generatedImages, setGeneratedImages] = useState({
     result: { type: '' },
   })
-  const q = String(router.query)
+  const q = String(router.query.q)
 
   const generateImage = async (q: string) => {
-    console.log('base-url', process.env.NEXT_PUBLIC_BASE_URL)
     const imageReq = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/image/${q}`
     )
