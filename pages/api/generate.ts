@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import googleTrends from 'google-trends-api'
 import NewsAPI from 'newsapi'
 import { Configuration, OpenAIApi } from 'openai'
+import { Dalle } from 'dalle-node'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const datObj = new Date()
@@ -60,20 +61,33 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return ''
     }
 
-    const prompt = response?.data?.choices?.[0]?.text?.split('\n\n')[1]
+    const prompt = String(response?.data?.choices?.[0]?.text?.split('\n\n')[1])
 
     return prompt
   }
 
-  const generateImage = async () => {}
+  const generateImage = async (prompt: string) => {
+    const dalle = new Dalle(process.env.DALLE_API_BEARER)
+    const dalleReq = await dalle.generate(prompt)
+
+    if (!Array.isArray(dalleReq)) {
+      return ''
+    }
+
+    const image = dalleReq[0].generation.image_path
+
+    return image
+  }
 
   const trend = await getTrend()
   const headline = await getHeadline(trend)
   const prompt = await generatePrompt(headline)
+  const image = await generateImage(prompt)
 
   res.json({
     trend,
     headline,
     prompt,
+    image,
   })
 }
