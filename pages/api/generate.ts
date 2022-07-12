@@ -61,7 +61,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return ''
     }
 
-    const prompt = response.data.choices[0].text.split('\n\n')[1]
+    const prompt = response?.data?.choices?.[0]?.text?.split('\n\n')[1]
 
     return prompt
   }
