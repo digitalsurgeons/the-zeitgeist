@@ -4,12 +4,12 @@ import { useRouter } from 'next/router'
 
 const Image: NextPage = () => {
   const router = useRouter()
-  const [generatedImages, setGeneratedImages] = useState(false)
-  const { q } = router.query
+  const [generatedImages, setGeneratedImages] = useState({
+    result: { type: '' },
+  })
+  const q = String(router.query)
 
-  console.log(q)
-
-  const generateImage = async (q) => {
+  const generateImage = async (q: string) => {
     console.log('base-url', process.env.NEXT_PUBLIC_BASE_URL)
     const imageReq = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/image/${q}`
@@ -27,19 +27,22 @@ const Image: NextPage = () => {
 
   return (
     <div className="flex items-center justify-center">
-      {!generatedImages && <p className="mt-24">Generating images...</p>}
+      {!generatedImages?.result?.type && (
+        <p className="mt-24">Generating images...</p>
+      )}
       {generatedImages && (
         <>
           {generatedImages?.result?.type === 'error' && (
             <p>Error generating image</p>
           )}
-          {Array.isArray(generatedImages?.result) && (
-            <div className="flex flex-col">
-              {generatedImages.result.map((img, index) => {
-                return <img key={index} src={img.generation.image_path} />
-              })}
-            </div>
-          )}
+          {generatedImages?.result?.type !== 'error' &&
+            Array.isArray(generatedImages?.result) && (
+              <div className="flex flex-col">
+                {generatedImages.result.map((img, index) => {
+                  return <img key={index} src={img.generation.image_path} />
+                })}
+              </div>
+            )}
         </>
       )}
     </div>
