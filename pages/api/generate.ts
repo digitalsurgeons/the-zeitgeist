@@ -5,9 +5,9 @@ import { Configuration, OpenAIApi } from 'openai'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const datObj = new Date()
-  const date =
-    String(req.query.date) ||
-    `${datObj.getFullYear()}-${datObj.getMonth() + 1}-${datObj.getDate()}`
+  const date = req.query.date
+    ? String(req.query.date)
+    : `${datObj.getFullYear()}-${datObj.getMonth() + 1}-${datObj.getDate()}`
 
   // get daily trend from google trends
   const getTrend = async () => {
