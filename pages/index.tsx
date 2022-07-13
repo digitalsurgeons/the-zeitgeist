@@ -91,8 +91,11 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                     className="block h-full p-6 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]">
                     <img src={item.image} className="rounded-md" />
                     <div className="py-2 text-zinc-900">
-                      <h3 className="my-4 text-lg font-bold">
-                        #{item.tokenId} - {item.trend}
+                      <h3 className="flex justify-between my-4 text-lg font-bold">
+                        #{item.tokenId} - {item.trend}{' '}
+                        <span className="text-sm text-gray-500">
+                          {item.date}
+                        </span>
                       </h3>
                       <p className="italic text-gray-500">
                         &ldquo;{item.prompt}&rdquo;
@@ -150,7 +153,12 @@ export async function getServerSideProps() {
     const client = await clientPromise
     const db = await client.db()
 
-    const items = await db.collection('items').find({}).limit(20).toArray()
+    const items = await db
+      .collection('items')
+      .find({})
+      .sort('tokenId', -1)
+      .limit(20)
+      .toArray()
 
     const itemsFiltered = items.map((item) => {
       return {
@@ -158,6 +166,7 @@ export async function getServerSideProps() {
         prompt: item.prompt,
         image: item.image,
         tokenId: item.tokenId,
+        date: item.date,
       }
     })
 
