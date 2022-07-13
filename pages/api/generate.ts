@@ -33,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       from: date,
       to: date,
       language: 'en',
-      sortBy: 'popularity',
+      sortBy: 'relevancy',
     })
 
     const headline = newsApiReq.articles[0].title
@@ -49,7 +49,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const response = await openai.createCompletion({
       model: 'text-davinci-002',
-      prompt: `Describe an amazing scene based on ${headline}`,
+      prompt: `Describe an inspiring scene based on ${headline}`,
       temperature: 0.7,
       max_tokens: 256,
       top_p: 1,
@@ -68,7 +68,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const generateImage = async (prompt: string) => {
     const dalle = new Dalle(process.env.DALLE_API_BEARER)
-    const dalleReq = await dalle.generate(prompt)
+    const dalleReq = await dalle.generate(prompt.substring(0, 240))
+
+    console.log(dalleReq)
 
     if (!Array.isArray(dalleReq)) {
       return ''
