@@ -4,11 +4,10 @@ import clientPromise from '../lib/mongodb'
 import { FaTwitter, FaInstagram, FaDiscord } from 'react-icons/fa'
 
 type HomeProps = {
-  isConnected: boolean
+  items: any[]
 }
 
-const Home: NextPage<HomeProps> = ({ isConnected }) => {
-  console.log('isConnected', isConnected)
+const Home: NextPage<HomeProps> = ({ items }) => {
   return (
     <>
       <Head>
@@ -81,35 +80,31 @@ const Home: NextPage<HomeProps> = ({ isConnected }) => {
             </a>
           </div>
 
-          <div className="flex flex-wrap mt-32 mb-28">
-            {[...Array(8)].map((item, index) => {
+          <div className="flex flex-wrap items-stretch mt-32">
+            {items.map((item, index) => {
               return (
-                <div className="w-1/4 px-3 py-4" key={index}>
+                <div className="w-1/2 px-6 py-8" key={index}>
                   <a
                     href="#"
-                    className="block p-4 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]">
-                    <img
-                      src="https://placeimg.com/600/600/any"
-                      className="rounded-md"
-                    />
+                    className="block h-full p-6 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]">
+                    <img src={item.image} className="rounded-md" />
                     <div className="py-2 text-zinc-900">
-                      <h3 className="my-2 font-bold">#000{index + 1}</h3>
-                      <p className="text-xs italic text-gray-500">
-                        &ldquo;Irure minim ullamco quis nulla mollit minim
-                        cupidatat Lorem enim. Velit ex laborum adipisicing
-                        occaecat cillum reprehenderit officia consectetur est
-                        est velit irure mollit minim.&rdquo;
+                      <h3 className="my-4 text-lg font-bold">
+                        #{item.tokenId} - {item.trend}
+                      </h3>
+                      <p className="italic text-gray-500">
+                        &ldquo;{item.prompt}&rdquo;
                       </p>
                     </div>
                   </a>
                 </div>
               )
             })}
-
-            <button className="flex items-center px-6 py-3 mx-auto mt-12 transition duration-300 bg-white rounded-lg text-zinc-900 hover:bg-teal-500 hover:text-white">
-              View full collection
-            </button>
           </div>
+
+          <button className="flex items-center px-6 py-3 mx-auto mt-12 transition duration-300 bg-white rounded-lg mb-28 text-zinc-900 hover:bg-teal-500 hover:text-white">
+            View full collection
+          </button>
         </div>
         <footer className="px-4 py-10 mx-auto overflow-hidden max-w-7xl sm:px-6 lg:px-8">
           <nav className="flex flex-col items-center gap-8">
@@ -153,22 +148,24 @@ export async function getServerSideProps() {
     const client = await clientPromise
     const db = await client.db()
 
-    const movies = await db
-      .collection('movies')
-      .find({})
-      .sort({ metacritic: -1 })
-      .limit(20)
-      .toArray()
+    const items = await db.collection('items').find({}).limit(20).toArray()
 
-    console.log(movies)
+    const itemsFiltered = items.map((item) => {
+      return {
+        trend: item.trend,
+        prompt: item.prompt,
+        image: item.image,
+        tokenId: item.tokenId,
+      }
+    })
 
     return {
-      props: { isConnected: true },
+      props: { items: itemsFiltered },
     }
   } catch (e) {
     console.error(e)
     return {
-      props: { isConnected: false },
+      props: {},
     }
   }
 }
