@@ -15,11 +15,13 @@ const Home: NextPage<HomeProps> = ({ items }) => {
       </Head>
       <div className="w-full h-full min-h-screen text-white bg-zinc-900">
         <header className="flex items-center p-12 space-between ">
-          <a href="#" className="font-serif text-2xl">
+          <a
+            href="#"
+            className="mx-auto font-serif text-2xl text-center xl:text-left xl:mx-0">
             <strong className="font-bold">The Zeitgeist</strong> - NFT
             Collection
           </a>
-          <nav className="flex items-center ml-auto">
+          <nav className="hidden ml-auto xl:flex">
             <ul className="flex gap-16 items-center text-lg font-medium translate-y-[1px]">
               <li>
                 <a
@@ -59,17 +61,17 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 </a>
               </li>
             </ul>
+            <button className="flex items-center px-6 py-3 transition duration-300 bg-white rounded-lg text-zinc-900 hover:bg-teal-500 hover:text-white">
+              Connect Wallet
+            </button>
           </nav>
-          <button className="flex items-center px-6 py-3 transition duration-300 bg-white rounded-lg text-zinc-900 hover:bg-teal-500 hover:text-white">
-            Connect Wallet
-          </button>
         </header>
-        <div className="flex flex-col justify-center mx-auto max-w-7xl">
+        <div className="flex flex-col justify-center px-4 mx-auto max-w-7xl">
           <div className="mt-24 space-y-8 text-center">
-            <h1 className="leading-tight text-7xl">
+            <h1 className="text-4xl leading-tight md:text-5xl xl:text-7xl">
               <span className="text-teal-400">Created</span> by A.I,{' '}
-              <span className="text-teal-400">inspired</span> by culture.
-              <br />
+              <span className="text-teal-400">inspired</span> by culture.{' '}
+              <br className="hidden md:block" />
               One piece <span className="text-teal-400">generated</span> every
               day.
             </h1>
@@ -83,7 +85,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
           <div className="flex flex-wrap items-stretch mt-32">
             {items.map((item, index) => {
               return (
-                <div className="w-1/2 px-6 py-8" key={index}>
+                <div className="w-full px-6 py-4 md:py-8 md:w-1/2" key={index}>
                   <a
                     href="#"
                     className="block h-full p-6 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]">
