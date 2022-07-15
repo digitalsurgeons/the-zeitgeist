@@ -10,6 +10,9 @@ module.exports = {
         sans: 'Source Sans Pro',
         serif: 'Playfair Display',
       },
+      maxWidth: {
+        '8xl': '87.5rem',
+      },
     },
   },
   plugins: [],
