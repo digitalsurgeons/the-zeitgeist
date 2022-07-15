@@ -97,21 +97,16 @@ const Home: NextPage<HomeProps> = ({ items }) => {
           <div className="flex flex-wrap items-stretch mt-32">
             {items.map((item, index) => {
               return (
-                <div className="w-full px-6 py-4 md:py-8 md:w-1/2" key={index}>
+                <div className="w-1/2 px-6 py-4 md:py-8 md:w-1/3" key={index}>
                   <a
                     href="#"
                     className="block h-full p-6 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]">
                     <img src={item.image} className="rounded-md" />
                     <div className="py-2 text-zinc-900">
-                      <h3 className="flex justify-between my-4 text-lg font-bold">
-                        #{item.tokenId} - {item.trend}{' '}
-                        <span className="text-sm text-gray-500">
-                          {item.date}
-                        </span>
+                      <h3 className="mt-2 mb-1 text-lg font-bold">
+                        {item.trend}{' '}
                       </h3>
-                      <p className="italic text-gray-500">
-                        &ldquo;{item.prompt}&rdquo;
-                      </p>
+                      <h4 className="text-gray-500">{item.date}</h4>
                     </div>
                   </a>
                 </div>
