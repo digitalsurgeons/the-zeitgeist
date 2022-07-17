@@ -83,7 +83,7 @@ const Generate: NextPage = () => {
 
             <div className="p-6 mt-8 text-base text-gray-400 border-b rounded-lg border-slate-700 bg-slate-800">
               <code>
-                /imagine Prompt will be added here once generated :: 3D::
+                /imagine Prompt will be added here once generated :: 3D ::
                 volumetric light --style Octane render --test
               </code>
             </div>
