@@ -7,7 +7,7 @@ const Generate: NextPage = () => {
       <Head>
         <title>Zeitgesit Admin - Generate</title>
       </Head>
-      <div className="flex flex-col items-center w-screen min-h-screen py-12">
+      <div className="flex flex-col items-center w-screen min-h-screen px-4 py-12">
         <h1 className="mb-16 text-4xl font-bold">The ZeitGeist Admin</h1>
 
         <div className="w-full max-w-6xl mx-auto text-lg">
