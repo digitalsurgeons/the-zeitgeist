@@ -40,13 +40,6 @@ export const Header = () => {
               <FaInstagram />
             </a>
           </li>
-          <li>
-            <a
-              href="#"
-              className="text-white transition duration-300 hover:text-teal-500">
-              <FaDiscord />
-            </a>
-          </li>
         </ul>
         <button className="flex items-center justify-center py-3 pl-5 pr-6 transition duration-300 bg-white rounded-lg fill-zinc-800 hover:fill-white group text-zinc-900 hover:bg-teal-500 hover:text-white">
           <svg

@@ -19,13 +19,6 @@ export const Footer = () => {
               <FaInstagram />
             </a>
           </li>
-          <li>
-            <a
-              href="#"
-              className="text-white transition duration-300 hover:text-teal-500">
-              <FaDiscord />
-            </a>
-          </li>
         </ul>
       </nav>
       <p className="mt-8 text-base text-center text-gray-300">
