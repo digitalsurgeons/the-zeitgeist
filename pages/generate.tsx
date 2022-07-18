@@ -164,17 +164,19 @@ const Generate: NextPage = () => {
             <div className="p-8 my-8 text-gray-500 bg-gray-50">
               <div className="mb-4">
                 <span className="text-sm font-bold text-gray-900">Trend</span>
-                <p>Trend will be added here once generated</p>
+                <p>{trend || 'Trend will be added here once generated'}</p>
               </div>
               <div className="mb-4">
                 <span className="text-sm font-bold text-gray-900">
                   Headline
                 </span>
-                <p>Headling will be added here once generated</p>
+                <p>
+                  {headline || 'Headline will be added here once generated'}
+                </p>
               </div>
               <div className="mb-4">
                 <span className="text-sm font-bold text-gray-900">Prompt</span>
-                <p>Prompt will be added here once generated</p>
+                <p>{prompt || 'Headline will be added here once generated'}</p>
               </div>
               <div>
                 <span className="text-sm font-bold text-gray-900">Image</span>
