@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@pinata/sdk": "^1.1.26",
+    "clsx": "^1.2.1",
     "dotenv": "^16.0.1",
     "emoji-strip": "^1.0.1",
     "google-trends-api": "^4.9.2",
