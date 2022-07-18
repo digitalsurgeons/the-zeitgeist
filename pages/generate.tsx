@@ -1,7 +1,30 @@
+import { useState } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import clsx from 'clsx'
 
 const Generate: NextPage = () => {
+  const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
+  const [trend, setTrend] = useState('')
+  const [headline, setHeadline] = useState('')
+  const [prompt, setPrompt] = useState('')
+  const promptFlags = ' :: 3D :: volumetric light --style Octane render --test'
+
+  const generatePrompt = async () => {
+    setIsGeneratingPrompt(true)
+
+    const generatePromptReq = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL + '/api/generate/prompt'
+    )
+
+    const generatePrompt = await generatePromptReq.json()
+
+    setTrend(generatePrompt.trend)
+    setHeadline(generatePrompt.headline)
+    setPrompt(generatePrompt.prompt)
+    setIsGeneratingPrompt(false)
+  }
+
   return (
     <>
       <Head>
@@ -16,8 +39,16 @@ const Generate: NextPage = () => {
               Step 1
             </h2>
             <p>Click to generate the prompt of the day.</p>
-            <button className="px-8 py-2 my-4 text-white bg-blue-500 rounded-md">
-              Generate
+            <button
+              onClick={generatePrompt}
+              className={clsx(
+                'px-8 py-2 my-4 bg-blue-500 rounded-md',
+                isGeneratingPrompt
+                  ? 'bg-gray-200 text-gray-400'
+                  : 'bg-blue-500 text-white'
+              )}
+              disabled={isGeneratingPrompt}>
+              {isGeneratingPrompt ? 'Generating...' : 'Generate'}
             </button>
 
             <div className="w-1/2 mt-8">
@@ -34,6 +65,8 @@ const Generate: NextPage = () => {
                     id="trend"
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Trend will be added here once generated"
+                    disabled
+                    value={trend}
                   />
                 </div>
               </div>
@@ -51,6 +84,8 @@ const Generate: NextPage = () => {
                     id="headline"
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Headline will be added here once generated"
+                    disabled
+                    value={headline}
                   />
                 </div>
               </div>
@@ -62,13 +97,14 @@ const Generate: NextPage = () => {
                   Prompt
                 </label>
                 <div className="mt-1">
-                  <input
-                    type="text"
+                  <textarea
                     name="prompt"
                     id="prompt"
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Prompt will be added here once generated"
-                  />
+                    rows={6}
+                    disabled
+                    value={prompt}></textarea>
                 </div>
               </div>
             </div>
@@ -83,8 +119,11 @@ const Generate: NextPage = () => {
 
             <div className="p-6 mt-8 text-base text-gray-400 border-b rounded-lg border-slate-700 bg-slate-800">
               <code>
-                /imagine Prompt will be added here once generated :: 3D ::
-                volumetric light --style Octane render --test
+                <>
+                  {prompt
+                    ? `/imagine ${prompt + promptFlags}`
+                    : 'Prompt will be added here once generated'}
+                </>
               </code>
             </div>
           </div>
