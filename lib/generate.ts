@@ -1,5 +1,6 @@
 import NewsAPI from 'newsapi'
 import googleTrends from 'google-trends-api'
+import pinataClient from '@pinata/sdk'
 import { Configuration, OpenAIApi } from 'openai'
 
 export const getTrend = async (date: string) => {
@@ -56,3 +57,5 @@ export const generatePrompt = async (headline: string) => {
 
   return prompt
 }
+
+export const uploadImage = (imgUrl: string) => {}

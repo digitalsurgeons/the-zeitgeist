@@ -8,6 +8,9 @@ const Generate: NextPage = () => {
   const [trend, setTrend] = useState('')
   const [headline, setHeadline] = useState('')
   const [prompt, setPrompt] = useState('')
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
+  const [ipfsImageUrl, setIpfsImageUrl] = useState('')
   const promptFlags = ' :: 3D :: volumetric light --style Octane render --test'
 
   const generatePrompt = async () => {
@@ -23,6 +26,19 @@ const Generate: NextPage = () => {
     setHeadline(generatePrompt.headline)
     setPrompt(generatePrompt.prompt)
     setIsGeneratingPrompt(false)
+  }
+
+  const uploadImage = async () => {
+    const uploadImageReq = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL +
+        `/api/generate/upload?imageUrl=${imageUrl}`
+    )
+
+    const uploadImage = await uploadImageReq.json()
+
+    setIpfsImageUrl(uploadImage.image)
+
+    console.log(uploadImage)
   }
 
   return (
@@ -147,9 +163,20 @@ const Generate: NextPage = () => {
                   name="headline"
                   id="headline"
                   className="block w-full px-4 py-2 border border-r-0 border-gray-300 shadow-sm rounded-tl-md rounded-bl-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  disabled={isUploadingImage}
+                  placeholder="https://cdn.discordapp.com/..."
+                  onChange={(e) => setImageUrl(e.currentTarget.value)}
                 />
-                <button className="px-8 py-2 text-white bg-blue-500 rounded-tr-md rounded-br-md">
-                  Upload
+                <button
+                  className={clsx(
+                    'px-8 py-2 rounded-tr-md rounded-br-md',
+                    isUploadingImage
+                      ? 'bg-gray-200 text-gray-400'
+                      : 'text-white bg-blue-500'
+                  )}
+                  onClick={uploadImage}
+                  disabled={isUploadingImage}>
+                  {isUploadingImage ? 'Uploading...' : 'Upload'}
                 </button>
               </div>
             </div>
@@ -180,7 +207,8 @@ const Generate: NextPage = () => {
               </div>
               <div>
                 <span className="text-sm font-bold text-gray-900">Image</span>
-                <p>Image will be added here once uploaded</p>
+                {!ipfsImageUrl && <p>Image will be added here once uploaded</p>}
+                {ipfsImageUrl && <img src={ipfsImageUrl} />}
               </div>
             </div>
 
