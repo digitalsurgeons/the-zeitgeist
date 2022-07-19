@@ -74,6 +74,8 @@ const Generate: NextPage = () => {
                 }}
                 clearable={false}
                 value={promptDate}
+                minDate={dayjs().subtract(29, 'days').toDate()}
+                maxDate={dayjs().toDate()}
                 onChange={(value) =>
                   value ? setPromptDate(value) : setPromptDate(dayjs().subtract(1, 'days').toDate())
                 }
