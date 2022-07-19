@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getTrend, getHeadline, generatePrompt } from '../../../lib/generate'
+import dayjs from 'dayjs'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const datObj = new Date()
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const date = req.query.date
     ? String(req.query.date)
-    : `${datObj.getFullYear()}-${datObj.getMonth() + 1}-${datObj.getDate()}`
+    : `${dayjs().subtract(1, 'days').format('YYYY-MM-DD')}`
 
   const trend = await getTrend(date)
   const headline = await getHeadline(date, trend)
@@ -17,3 +17,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     prompt,
   })
 }
+
+export default handler

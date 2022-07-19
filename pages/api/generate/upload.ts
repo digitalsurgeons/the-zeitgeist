@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { uploadImage } from '../../../lib/generate'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const imageUrl = String(req.query.imageUrl)
 
   const image = await uploadImage(imageUrl)
@@ -10,3 +10,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     image,
   })
 }
+
+export default handler

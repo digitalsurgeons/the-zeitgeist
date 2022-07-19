@@ -11,8 +11,7 @@ export const getTrend = async (date: string) => {
 
   const trendJSON = JSON.parse(trendReq)
 
-  const trend =
-    trendJSON.default.trendingSearchesDays[0].trendingSearches[0].title.query
+  const trend = trendJSON.default.trendingSearchesDays[0].trendingSearches[0].title.query
 
   return trend
 }
