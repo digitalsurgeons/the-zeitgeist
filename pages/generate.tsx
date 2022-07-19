@@ -4,6 +4,7 @@ import Head from 'next/head'
 import clsx from 'clsx'
 import { DatePicker } from '@mantine/dates'
 import dayjs from 'dayjs'
+import Image from 'next/image'
 
 const Generate: NextPage = () => {
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
@@ -33,15 +34,15 @@ const Generate: NextPage = () => {
   }
 
   const uploadImage = async () => {
+    console.log(trend.replace(/\s/g, ''))
     const uploadImageReq = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + `/api/generate/upload?imageUrl=${imageUrl}`,
+      process.env.NEXT_PUBLIC_BASE_URL +
+        `/api/generate/upload?imageUrl=${imageUrl}&trend=${trend.replace(/\s/g, '')}`,
     )
 
     const uploadImage = await uploadImageReq.json()
 
     setIpfsImageUrl(uploadImage.image)
-
-    console.log(uploadImage)
   }
 
   return (
@@ -202,10 +203,19 @@ const Generate: NextPage = () => {
                 <span className="text-sm font-bold text-gray-900">Prompt</span>
                 <p>{prompt || 'Headline will be added here once generated'}</p>
               </div>
-              <div>
-                <span className="text-sm font-bold text-gray-900">Image</span>
+              <div className="flex flex-col">
+                <span className="block text-sm font-bold text-gray-900">Image</span>
                 {!ipfsImageUrl && <p>Image will be added here once uploaded</p>}
-                {ipfsImageUrl && <img src={ipfsImageUrl} />}
+                {ipfsImageUrl && (
+                  <div className="h-[500px] mt-2">
+                    <Image
+                      src={ipfsImageUrl}
+                      alt="The days generated image"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
