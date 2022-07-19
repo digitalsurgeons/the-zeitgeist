@@ -6,16 +6,12 @@ export const Footer = () => {
       <nav className="flex flex-col items-center gap-8">
         <ul className="flex gap-6 items-center text-lg mx-16 font-medium translate-y-[1px]">
           <li>
-            <a
-              href="#"
-              className="text-white transition duration-300 hover:text-teal-500">
+            <a href="#" className="text-white transition duration-300 hover:text-teal-500">
               <FaTwitter />
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="text-white transition duration-300 hover:text-teal-500">
+            <a href="#" className="text-white transition duration-300 hover:text-teal-500">
               <FaInstagram />
             </a>
           </li>

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import clsx from 'clsx'
+import { DatePicker } from '@mantine/dates'
+import dayjs from 'dayjs'
 
 const Generate: NextPage = () => {
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
@@ -12,12 +14,14 @@ const Generate: NextPage = () => {
   const [imageUrl, setImageUrl] = useState('')
   const [ipfsImageUrl, setIpfsImageUrl] = useState('')
   const promptFlags = ' :: 3D :: volumetric light --style Octane render --test'
+  const [promptDate, setPromptDate] = useState(dayjs().subtract(1, 'days').toDate())
 
   const generatePrompt = async () => {
     setIsGeneratingPrompt(true)
 
     const generatePromptReq = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL + '/api/generate/prompt'
+      process.env.NEXT_PUBLIC_BASE_URL +
+        `/api/generate/prompt?date=${dayjs(promptDate).format('YYYY-MM-DD')}`,
     )
 
     const generatePrompt = await generatePromptReq.json()
@@ -30,8 +34,7 @@ const Generate: NextPage = () => {
 
   const uploadImage = async () => {
     const uploadImageReq = await fetch(
-      process.env.NEXT_PUBLIC_BASE_URL +
-        `/api/generate/upload?imageUrl=${imageUrl}`
+      process.env.NEXT_PUBLIC_BASE_URL + `/api/generate/upload?imageUrl=${imageUrl}`,
     )
 
     const uploadImage = await uploadImageReq.json()
@@ -51,27 +54,35 @@ const Generate: NextPage = () => {
 
         <div className="w-full max-w-6xl mx-auto text-lg">
           <div className="mb-16 text-left">
-            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">
-              Step 1
-            </h2>
+            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">Step 1</h2>
             <p>Click to generate the prompt of the day.</p>
-            <button
-              onClick={generatePrompt}
-              className={clsx(
-                'px-8 py-2 my-4 bg-blue-500 rounded-md',
-                isGeneratingPrompt
-                  ? 'bg-gray-200 text-gray-400'
-                  : 'bg-blue-500 text-white'
-              )}
-              disabled={isGeneratingPrompt}>
-              {isGeneratingPrompt ? 'Generating...' : 'Generate'}
-            </button>
+            <div className="flex flex-row gap-4 mt-16">
+              <button
+                onClick={generatePrompt}
+                className={clsx(
+                  'px-8 py-2 bg-blue-500 rounded-md',
+                  isGeneratingPrompt ? 'bg-gray-200 text-gray-400' : 'bg-blue-500 text-white',
+                )}
+                disabled={isGeneratingPrompt}
+              >
+                {isGeneratingPrompt ? 'Generating...' : 'Generate'}
+              </button>
+
+              <DatePicker
+                classNames={{
+                  input: 'h-12',
+                }}
+                clearable={false}
+                value={promptDate}
+                onChange={(value) =>
+                  value ? setPromptDate(value) : setPromptDate(dayjs().subtract(1, 'days').toDate())
+                }
+              />
+            </div>
 
             <div className="w-1/2 mt-8">
               <div className="mb-4">
-                <label
-                  htmlFor="trend"
-                  className="block text-sm font-bold text-gray-700">
+                <label htmlFor="trend" className="block text-sm font-bold text-gray-700">
                   Trend
                 </label>
                 <div className="mt-1">
@@ -88,9 +99,7 @@ const Generate: NextPage = () => {
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="headline"
-                  className="block text-sm font-bold text-gray-700">
+                <label htmlFor="headline" className="block text-sm font-bold text-gray-700">
                   Headline
                 </label>
                 <div className="mt-1">
@@ -107,9 +116,7 @@ const Generate: NextPage = () => {
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="prompt"
-                  className="block text-sm font-bold text-gray-700">
+                <label htmlFor="prompt" className="block text-sm font-bold text-gray-700">
                   Prompt
                 </label>
                 <div className="mt-1">
@@ -120,16 +127,15 @@ const Generate: NextPage = () => {
                     placeholder="Prompt will be added here once generated"
                     rows={6}
                     disabled
-                    value={prompt}></textarea>
+                    value={prompt}
+                  ></textarea>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="mb-16 text-left">
-            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">
-              Step 2
-            </h2>
+            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">Step 2</h2>
 
             <p>Paste this into Discord.</p>
 
@@ -145,16 +151,12 @@ const Generate: NextPage = () => {
           </div>
 
           <div className="text-left">
-            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">
-              Step 3
-            </h2>
+            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">Step 3</h2>
 
             <p>Copy image URL and paste below.</p>
 
             <div className="my-8">
-              <label
-                htmlFor="headline"
-                className="block text-sm font-bold text-gray-700">
+              <label htmlFor="headline" className="block text-sm font-bold text-gray-700">
                 Image URL
               </label>
               <div className="flex mt-1">
@@ -170,12 +172,11 @@ const Generate: NextPage = () => {
                 <button
                   className={clsx(
                     'px-8 py-2 rounded-tr-md rounded-br-md',
-                    isUploadingImage
-                      ? 'bg-gray-200 text-gray-400'
-                      : 'text-white bg-blue-500'
+                    isUploadingImage ? 'bg-gray-200 text-gray-400' : 'text-white bg-blue-500',
                   )}
                   onClick={uploadImage}
-                  disabled={isUploadingImage}>
+                  disabled={isUploadingImage}
+                >
                   {isUploadingImage ? 'Uploading...' : 'Upload'}
                 </button>
               </div>
@@ -183,9 +184,7 @@ const Generate: NextPage = () => {
           </div>
 
           <div className="mb-16 text-left">
-            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">
-              Step 4
-            </h2>
+            <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">Step 4</h2>
             <p>Check everything below and click to mint todays NFT.</p>
 
             <div className="p-8 my-8 text-gray-500 bg-gray-50">
@@ -194,12 +193,8 @@ const Generate: NextPage = () => {
                 <p>{trend || 'Trend will be added here once generated'}</p>
               </div>
               <div className="mb-4">
-                <span className="text-sm font-bold text-gray-900">
-                  Headline
-                </span>
-                <p>
-                  {headline || 'Headline will be added here once generated'}
-                </p>
+                <span className="text-sm font-bold text-gray-900">Headline</span>
+                <p>{headline || 'Headline will be added here once generated'}</p>
               </div>
               <div className="mb-4">
                 <span className="text-sm font-bold text-gray-900">Prompt</span>

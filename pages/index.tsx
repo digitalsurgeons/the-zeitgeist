@@ -20,12 +20,12 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               <span className="text-teal-400">Created</span> by A.I,{' '}
               <span className="text-teal-400">inspired</span> by culture.{' '}
               <br className="hidden md:block" />
-              One piece <span className="text-teal-400">generated</span> every
-              day.
+              One piece <span className="text-teal-400">generated</span> every day.
             </h1>
             <a
               href="#"
-              className="inline-block text-lg italic text-gray-300 transition duration-300 border-b border-dashed hover:border-transparent">
+              className="inline-block text-lg italic text-gray-300 transition duration-300 border-b border-dashed hover:border-transparent"
+            >
               How does it work?
             </a>
           </div>
@@ -36,12 +36,11 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 <div className="" key={index}>
                   <a
                     href="#"
-                    className="block h-full p-4 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]">
+                    className="block h-full p-4 bg-white rounded-md shadow-lg transition duration-300 hover:scale-[1.02]"
+                  >
                     <img src={item.image} className="rounded-md" />
                     <div className="py-2 text-zinc-900">
-                      <h3 className="mt-2 mb-1 text-lg font-bold">
-                        {item.trend}{' '}
-                      </h3>
+                      <h3 className="mt-2 mb-1 text-lg font-bold">{item.trend} </h3>
                       <h4 className="text-gray-500">{item.date}</h4>
                     </div>
                   </a>
@@ -66,12 +65,7 @@ export async function getServerSideProps() {
     const client = await clientPromise
     const db = await client.db()
 
-    const items = await db
-      .collection('items')
-      .find({})
-      .sort('tokenId', -1)
-      .limit(20)
-      .toArray()
+    const items = await db.collection('items').find({}).sort('tokenId', -1).limit(20).toArray()
 
     const itemsFiltered = items.map((item) => {
       return {
