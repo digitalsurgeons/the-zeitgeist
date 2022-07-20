@@ -56,5 +56,3 @@ export const generatePrompt = async (headline: string) => {
 
   return prompt
 }
-
-export const uploadImage = (imgUrl: string) => {}

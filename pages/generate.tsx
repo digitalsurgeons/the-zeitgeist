@@ -37,12 +37,14 @@ const Generate: NextPage = () => {
     console.log(trend.replace(/\s/g, ''))
     const uploadImageReq = await fetch(
       process.env.NEXT_PUBLIC_BASE_URL +
-        `/api/generate/upload?imageUrl=${imageUrl}&trend=${trend.replace(/\s/g, '')}`,
+        `/api/generate/upload?imageUrl=${imageUrl}&trend=${trend.replace(/\s/g, '')}&date=${dayjs(
+          promptDate,
+        ).format('YYYY-MM-DD')}`,
     )
 
     const uploadImage = await uploadImageReq.json()
 
-    setIpfsImageUrl(uploadImage.image)
+    setIpfsImageUrl(`https://metawallet.mypinata.cloud/ipfs/${uploadImage.pinataHash}`)
   }
 
   return (
