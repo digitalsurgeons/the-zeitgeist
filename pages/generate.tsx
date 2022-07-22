@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { DatePicker } from '@mantine/dates'
+import clsx from 'clsx'
+import dayjs from 'dayjs'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import clsx from 'clsx'
-import { DatePicker } from '@mantine/dates'
-import dayjs from 'dayjs'
 import Image from 'next/image'
-import client from '../lib/mongodb'
+import { useState } from 'react'
 
 const Generate: NextPage = () => {
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
@@ -36,6 +35,7 @@ const Generate: NextPage = () => {
   }
 
   const uploadImage = async () => {
+    setIsUploadingImage(true)
     const uploadImageReq = await fetch(
       process.env.NEXT_PUBLIC_BASE_URL +
         `/api/generate/upload?imageUrl=${imageUrl}&trend=${trend.replace(/\s/g, '')}&date=${dayjs(
@@ -46,6 +46,7 @@ const Generate: NextPage = () => {
     const uploadImage = await uploadImageReq.json()
 
     setIpfsImageUrl(`https://metawallet.mypinata.cloud/ipfs/${uploadImage.pinataHash}`)
+    setIsUploadingImage(false)
   }
 
   const mintNft = async () => {
