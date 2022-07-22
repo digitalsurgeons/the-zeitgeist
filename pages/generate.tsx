@@ -16,7 +16,10 @@ const Generate: NextPage = () => {
   const [ipfsImageUrl, setIpfsImageUrl] = useState('')
   const [isMinting, setIsMinting] = useState(false)
   const promptFlags = ' :: 3D :: volumetric light --style Octane render --test'
-  const [promptDate, setPromptDate] = useState(dayjs().subtract(1, 'days').toDate())
+  // const [promptDate, setPromptDate] = useState(dayjs().subtract(1, 'days').toDate())
+  const [promptDate, setPromptDate] = useState(
+    'Thu Jul 15 2022 16:41:41 GMT-0400 (Eastern Daylight Time)',
+  )
 
   const generatePrompt = async () => {
     setIsGeneratingPrompt(true)
@@ -87,7 +90,7 @@ const Generate: NextPage = () => {
                 {isGeneratingPrompt ? 'Generating...' : 'Generate'}
               </button>
 
-              <DatePicker
+              {/* <DatePicker
                 classNames={{
                   input: 'h-12',
                 }}
@@ -98,6 +101,12 @@ const Generate: NextPage = () => {
                 onChange={(value) =>
                   value ? setPromptDate(value) : setPromptDate(dayjs().subtract(1, 'days').toDate())
                 }
+              /> */}
+
+              <input
+                type="text"
+                value={String(promptDate)}
+                onChange={(e) => setPromptDate(e.currentTarget.value)}
               />
             </div>
 
