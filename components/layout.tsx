@@ -8,7 +8,10 @@ type Props = {
 export const Layout = ({ children }: Props) => {
   return (
     <>
-      <div className="w-full h-full min-h-screen text-white bg-zinc-900">
+      <div
+        className="w-full h-full min-h-screen text-white bg-black bg-top bg-no-repeat bg-contain"
+        style={{ backgroundImage: 'url(/img/bg.svg)' }}
+      >
         <Header />
         {children}
         <Footer />

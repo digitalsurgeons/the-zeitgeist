@@ -1,11 +1,14 @@
+import Link from 'next/link'
 import { FaTwitter, FaInstagram, FaDiscord } from 'react-icons/fa'
 
 export const Header = () => {
   return (
     <header className="flex items-center p-12 space-between ">
-      <a href="#" className="mx-auto font-serif text-2xl text-center xl:text-left xl:mx-0">
-        <strong className="font-bold">The Zeitgeist</strong> - NFT Collection
-      </a>
+      <Link href="/" passHref>
+        <a className="mx-auto font-serif text-2xl text-center cusor-pointer xl:text-left xl:mx-0">
+          <img src="/img/logo.svg" />
+        </a>
+      </Link>
       <nav className="hidden ml-auto xl:flex">
         <ul className="flex gap-16 items-center text-lg font-medium translate-y-[1px]">
           <li>
@@ -37,7 +40,7 @@ export const Header = () => {
             </a>
           </li>
         </ul>
-        <button className="flex items-center justify-center py-3 pl-5 pr-6 transition duration-300 bg-white rounded-lg fill-zinc-800 hover:fill-white group text-zinc-900 hover:bg-teal-500 hover:text-white">
+        <button className="flex items-center justify-center py-3 pl-5 pr-6 transition duration-300 bg-teal-500 rounded-lg hover:fill-zinc-800 fill-white group text-zinc-900 hover:bg-white">
           <svg
             width="20"
             height="20"
