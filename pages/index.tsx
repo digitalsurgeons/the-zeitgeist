@@ -15,6 +15,10 @@ const Home: NextPage<HomeProps> = ({ items }) => {
       <>
         <Head>
           <title>The Zeitgeist</title>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+          <link rel="manifest" href="/manifest.webmanifest" />
         </Head>
         <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
           <div className="mt-12 space-y-8 text-center lg:mt-24">
