@@ -3,6 +3,7 @@ import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
 import { AiFillQuestionCircle } from 'react-icons/ai'
 import { Layout } from '../components/layout'
+import { Button } from '../components/button'
 
 type HomeProps = {
   items: any[]
@@ -59,9 +60,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             })}
           </div>
 
-          <button className="flex items-center px-6 py-3 mx-auto mt-12 transition duration-300 bg-white rounded-lg mb-28 text-zinc-900 hover:bg-teal-500 hover:text-white">
-            View full collection
-          </button>
+          <Button className="mt-12">View full collection</Button>
         </div>
       </>
     </Layout>
