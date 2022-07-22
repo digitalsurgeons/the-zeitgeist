@@ -80,28 +80,18 @@ export async function getServerSideProps() {
 
     const items = await db.collection('items').find({}).sort('tokenId', -1).limit(20).toArray()
 
-    const itemsFiltered = items.map((item) => {
+    const itemsFiltered = items.map((item, idx) => {
       return {
         trend: item.trend,
         prompt: item.prompt,
         image: item.image,
-        tokenId: item.tokenId,
-        date: item.date,
-      }
-    })
-
-    const itemsFiltered2 = items.map((item) => {
-      return {
-        trend: item.trend,
-        prompt: item.prompt,
-        image: item.image,
-        tokenId: item.tokenId,
+        tokenId: item.tokenId ?? idx,
         date: item.date,
       }
     })
 
     return {
-      props: { items: itemsFiltered.concat(itemsFiltered2) },
+      props: { items: itemsFiltered },
     }
   } catch (e) {
     console.error(e)

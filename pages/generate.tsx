@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { DatePicker } from '@mantine/dates'
 import dayjs from 'dayjs'
 import Image from 'next/image'
+import client from '../lib/mongodb'
 
 const Generate: NextPage = () => {
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
@@ -14,6 +15,7 @@ const Generate: NextPage = () => {
   const [isUploadingImage, setIsUploadingImage] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
   const [ipfsImageUrl, setIpfsImageUrl] = useState('')
+  const [isMinting, setIsMinting] = useState(false)
   const promptFlags = ' :: 3D :: volumetric light --style Octane render --test'
   const [promptDate, setPromptDate] = useState(dayjs().subtract(1, 'days').toDate())
 
@@ -34,7 +36,6 @@ const Generate: NextPage = () => {
   }
 
   const uploadImage = async () => {
-    console.log(trend.replace(/\s/g, ''))
     const uploadImageReq = await fetch(
       process.env.NEXT_PUBLIC_BASE_URL +
         `/api/generate/upload?imageUrl=${imageUrl}&trend=${trend.replace(/\s/g, '')}&date=${dayjs(
@@ -45,6 +46,20 @@ const Generate: NextPage = () => {
     const uploadImage = await uploadImageReq.json()
 
     setIpfsImageUrl(`https://metawallet.mypinata.cloud/ipfs/${uploadImage.pinataHash}`)
+  }
+
+  const mintNft = async () => {
+    setIsMinting(true)
+    const mintNftResponse = await fetch(
+      process.env.NEXT_PUBLIC_BASE_URL +
+        `/api/generate/mint?date=${dayjs(promptDate).format(
+          'YYYY-MM-DD',
+        )}&trend=${trend}&prompt=${prompt}&image=${ipfsImageUrl}`,
+    )
+    const data = await mintNftResponse.json()
+
+    console.log(data)
+    setIsMinting(false)
   }
 
   return (
@@ -221,7 +236,11 @@ const Generate: NextPage = () => {
               </div>
             </div>
 
-            <button className="px-8 py-2 my-4 font-bold text-white bg-teal-500 rounded-md">
+            <button
+              className="px-8 py-2 my-4 font-bold text-white bg-teal-500 rounded-md"
+              onClick={mintNft}
+              disabled={isMinting}
+            >
               Mint todays Zeitgeist NFT!
             </button>
           </div>
