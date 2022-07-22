@@ -1,41 +1,74 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import clientPromise from '../../../lib/mongodb'
+import { pinMetadata } from '../../../lib/pinata'
+import { MongoDoc, NftMetadata } from '../../../lib/types'
 
-type MintResponse = {
+type MintNftResponse = {
   success: boolean
-  message: string
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<MintResponse>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse>) => {
   try {
-    const { date, trend, prompt, image } = req.query
+    const { date, trend, headline, prompt, ipfsImageHash, ipfsImageTimestamp } = req.query
     const mongoClient = await clientPromise
     const db = await mongoClient.db()
-    const tokenId = (await db.collection('items').countDocuments()) + 1
-    const response = await db.collection('items').insertOne({
-      trend,
-      prompt,
-      image,
-      date,
-      tokenId,
-    })
 
-    if (!response.acknowledged) {
-      res.json({
-        success: false,
-        message: "Don't think it inserted",
-      })
-    }
+    const metadata = {
+      description:
+        'The Zeitgeist - Inspired by culture. Imagined by AI. One piece generated every day.',
+      image: `ipfs://${ipfsImageHash}`,
+      name: `Zeitgeist-${date}`,
+      attributes: [
+        {
+          trait_type: 'Date',
+          value: date,
+        },
+        {
+          trait_type: 'Trend',
+          value: trend,
+        },
+        {
+          trait_type: 'Headline',
+          value: headline,
+        },
+        {
+          trait_type: 'Prompt',
+          value: prompt,
+        },
+      ],
+    } as NftMetadata
+
+    const pinMetadataResponse = await pinMetadata(metadata, `${trend}-${date}`)
+
+    // this is going to get replaced after minting
+    const tokenId = (await db.collection('items').countDocuments()) + 1
+    // const tokenId = mintNft()
+
+    const mongoDoc = {
+      tokenId: tokenId,
+      ipfsGateway: process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud',
+      ipfsImageHash: ipfsImageHash,
+      ipfsImageTimestamp: ipfsImageTimestamp,
+      ipfsMetadataHash: pinMetadataResponse.IpfsHash,
+      ipfsMetadataTimestamp: pinMetadataResponse.Timestamp,
+      image: `https://${
+        process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud'
+      }/ipfs/${ipfsImageHash}`,
+      date: date,
+      trend: trend,
+      headline: headline,
+      prompt: prompt,
+    } as MongoDoc
+
+    const response = await db.collection('items').insertOne(mongoDoc)
 
     res.json({
-      success: true,
-      message: `Token id = ${tokenId}, Object id = ${response.insertedId}`,
+      success: response.acknowledged,
     })
   } catch (e) {
     console.error(e)
     res.json({
       success: false,
-      message: 'There was an error',
     })
   }
 }

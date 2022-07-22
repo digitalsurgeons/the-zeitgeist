@@ -1,6 +1,5 @@
 import NewsAPI from 'newsapi'
 import googleTrends from 'google-trends-api'
-import pinataClient from '@pinata/sdk'
 import { Configuration, OpenAIApi } from 'openai'
 
 export const getTrend = async (date: string) => {

@@ -14,6 +14,8 @@ const Generate: NextPage = () => {
   const [isUploadingImage, setIsUploadingImage] = useState(false)
   const [imageUrl, setImageUrl] = useState('')
   const [ipfsImageUrl, setIpfsImageUrl] = useState('')
+  const [ipfsImageHash, setIpfsImageHash] = useState('')
+  const [ipfsImageTimestamp, setIpfsImageTimestamp] = useState('')
   const [isMinting, setIsMinting] = useState(false)
   const promptFlags = ' :: 3D :: volumetric light --style Octane render --test'
   const [promptDate, setPromptDate] = useState(dayjs().subtract(1, 'days').toDate())
@@ -45,6 +47,8 @@ const Generate: NextPage = () => {
 
     const uploadImage = await uploadImageReq.json()
 
+    setIpfsImageHash(uploadImage.pinataHash)
+    setIpfsImageTimestamp(uploadImage.pinataTimestamp)
     setIpfsImageUrl(`https://metawallet.mypinata.cloud/ipfs/${uploadImage.pinataHash}`)
     setIsUploadingImage(false)
   }
@@ -55,7 +59,7 @@ const Generate: NextPage = () => {
       process.env.NEXT_PUBLIC_BASE_URL +
         `/api/generate/mint?date=${dayjs(promptDate).format(
           'YYYY-MM-DD',
-        )}&trend=${trend}&prompt=${prompt}&image=${ipfsImageUrl}`,
+        )}&trend=${trend}&headline=${headline}&prompt=${prompt}&ipfsImageHash=${ipfsImageHash}&ipfsImageTimestamp=${ipfsImageTimestamp}`,
     )
     const data = await mintNftResponse.json()
 
