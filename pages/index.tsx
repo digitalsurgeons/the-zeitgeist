@@ -32,7 +32,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             </a>
           </div>
 
-          <div className="grid max-w-5xl grid-cols-2 mx-auto mt-32 gap-x-8 gap-y-20">
+          <div className="grid max-w-5xl grid-cols-1 mx-auto mt-32 md:grid-cols-2 gap-x-8 gap-y-20">
             {items.map((item, index) => {
               return (
                 <a
