@@ -89,10 +89,15 @@ const Generate: NextPage = () => {
         <title>Zeitgesit Admin - Generate</title>
       </Head>
       <div className="flex flex-col items-center w-screen min-h-screen px-4 py-12">
-        <button onClick={signOutHandler} className={clsx('px-8 py-2 bg-blue-500 rounded-md')}>
-          Bye {session?.user?.name ?? ''}
-        </button>
-        <h1 className="mb-16 text-4xl font-bold">The ZeitGeist Admin</h1>
+        <div className="flex items-center justify-between w-full pr-4 mb-16">
+          <h1 className="text-4xl font-bold">The ZeitGeist Admin</h1>
+          <button
+            onClick={signOutHandler}
+            className={clsx('text-white px-8 py-2 bg-blue-500 rounded-md')}
+          >
+            Sign Out
+          </button>
+        </div>
 
         <div className="w-full max-w-6xl mx-auto text-lg">
           <div className="mb-16 text-left">
