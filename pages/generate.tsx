@@ -2,11 +2,18 @@ import { DatePicker } from '@mantine/dates'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { NextPage } from 'next'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react'
 
 const Generate: NextPage = () => {
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn('google')
+    },
+  })
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
   const [trend, setTrend] = useState('')
   const [headline, setHeadline] = useState('')
@@ -68,12 +75,23 @@ const Generate: NextPage = () => {
     setIsMinting(false)
   }
 
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+
+  const signOutHandler = () => {
+    signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}` })
+  }
+
   return (
     <>
       <Head>
         <title>Zeitgesit Admin - Generate</title>
       </Head>
       <div className="flex flex-col items-center w-screen min-h-screen px-4 py-12">
+        <button onClick={signOutHandler} className={clsx('px-8 py-2 bg-blue-500 rounded-md')}>
+          Bye {session?.user?.name ?? ''}
+        </button>
         <h1 className="mb-16 text-4xl font-bold">The ZeitGeist Admin</h1>
 
         <div className="w-full max-w-6xl mx-auto text-lg">

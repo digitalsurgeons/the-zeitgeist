@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+// import { unstable_getServerSession } from 'next-auth'
 import clientPromise from '../../../lib/mongodb'
 import { pinMetadata } from '../../../lib/pinata'
 import { MongoDoc, NftMetadata } from '../../../lib/types'
 
 type MintNftResponse = {
   success: boolean
+  message?: string
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse>) => {
