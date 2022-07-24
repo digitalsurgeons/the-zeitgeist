@@ -13,21 +13,13 @@ contract Zeitgeist is ERC721URIStorage, Ownable {
 
   constructor() ERC721("Zeitgeist", "ZEIT") {}
 
-  function mintNFT(address recipient, string memory tokenURI) public onlyOwner returns (uint256) {
+  function mintNFT(string memory tokenURI) public onlyOwner returns (uint256) {
     _tokenIds.increment();
 
     uint256 newItemId = _tokenIds.current();
-    _mint(recipient, newItemId);
+    _mint(msg.sender, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
     return newItemId;
-  }
-
-  function withdraw() public payable onlyOwner {
-    uint balance = address(this).balance;
-    require(balance > 0, "No ether left to withdraw");
-
-    (bool success, ) = (msg.sender).call{value: balance}("");
-    require(success, "Transfer failed.");
   }
 }
