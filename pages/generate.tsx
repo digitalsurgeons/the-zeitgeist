@@ -72,15 +72,26 @@ const Generate: NextPage = () => {
     const data = await mintNftResponse.json()
 
     console.log(data)
-    setIsMinting(false)
+    resetState()
   }
 
-  if (status === 'loading') {
-    return <p>Loading...</p>
+  const resetState = () => {
+    setTrend('')
+    setHeadline('')
+    setPrompt('')
+    setIpfsImageHash('')
+    setIpfsImageUrl('')
+    setIpfsImageTimestamp('')
+    setIsGeneratingPrompt(false)
+    setIsMinting(false)
   }
 
   const signOutHandler = () => {
     signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}` })
+  }
+
+  if (status === 'loading') {
+    return <p>Loading...</p>
   }
 
   return (
@@ -140,8 +151,8 @@ const Generate: NextPage = () => {
                     id="trend"
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Trend will be added here once generated"
-                    disabled
                     value={trend}
+                    onChange={(e) => setTrend(e.currentTarget.value)}
                   />
                 </div>
               </div>
@@ -157,8 +168,8 @@ const Generate: NextPage = () => {
                     id="headline"
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Headline will be added here once generated"
-                    disabled
                     value={headline}
+                    onChange={(e) => setHeadline(e.currentTarget.value)}
                   />
                 </div>
               </div>
@@ -174,8 +185,8 @@ const Generate: NextPage = () => {
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     placeholder="Prompt will be added here once generated"
                     rows={6}
-                    disabled
                     value={prompt}
+                    onChange={(e) => setPrompt(e.currentTarget.value)}
                   ></textarea>
                 </div>
               </div>
@@ -269,7 +280,7 @@ const Generate: NextPage = () => {
               onClick={mintNft}
               disabled={isMinting}
             >
-              Mint todays Zeitgeist NFT!
+              {isMinting ? 'Minting...' : 'Mint todays Zeitgeist NFT!'}
             </button>
           </div>
         </div>
