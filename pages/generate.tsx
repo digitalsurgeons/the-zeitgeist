@@ -89,17 +89,16 @@ const Generate: NextPage = () => {
         <title>Zeitgesit Admin - Generate</title>
       </Head>
       <div className="flex flex-col items-center w-screen min-h-screen px-4 py-12">
-        <div className="flex items-center justify-between w-full pr-4 mb-16">
-          <h1 className="text-4xl font-bold">The ZeitGeist Admin</h1>
-          <button
-            onClick={signOutHandler}
-            className={clsx('text-white px-8 py-2 bg-blue-500 rounded-md')}
-          >
-            Sign Out
-          </button>
-        </div>
-
         <div className="w-full max-w-6xl mx-auto text-lg">
+          <div className="flex items-center justify-between w-full pr-4 mb-16">
+            <h1 className="text-4xl font-bold">The ZeitGeist Admin</h1>
+            <button
+              onClick={signOutHandler}
+              className={clsx('text-white px-8 py-2 bg-blue-500 rounded-md')}
+            >
+              Sign Out
+            </button>
+          </div>
           <div className="mb-16 text-left">
             <h2 className="pb-1 mb-4 text-2xl font-bold border-b border-zinc-400">Step 1</h2>
             <p>Click to generate the prompt of the day.</p>
