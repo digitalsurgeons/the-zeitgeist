@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 const Generate: NextPage = () => {
   const { data: session, status } = useSession({
-    required: true,
+    required: false,
     onUnauthenticated() {
       signIn('google')
     },
