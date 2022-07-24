@@ -17,16 +17,15 @@ export const Header = () => {
               href="#"
               className="pb-1 transition duration-300 border-b border-transparent hover:border-white"
             >
-              About The Collection
+              About The Zeitgeist
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="pb-1 transition duration-300 border-b border-transparent hover:border-white"
-            >
-              The Gallery
-            </a>
+            <Link href="/collection" passHref>
+              <a className="pb-1 transition duration-300 border-b border-transparent hover:border-white">
+                The Collection
+              </a>
+            </Link>
           </li>
         </ul>
         <ul className="flex gap-6 items-center text-lg mx-16 font-medium translate-y-[1px]">

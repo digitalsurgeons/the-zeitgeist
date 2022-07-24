@@ -1,15 +1,13 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
-import { AiFillQuestionCircle } from 'react-icons/ai'
 import { Layout } from '../components/layout'
-import { Button } from '../components/button'
 
-type HomeProps = {
+type CollectionProps = {
   items: any[]
 }
 
-const Home: NextPage<HomeProps> = ({ items }) => {
+const Collection: NextPage<CollectionProps> = ({ items }) => {
   return (
     <Layout>
       <>
@@ -21,22 +19,6 @@ const Home: NextPage<HomeProps> = ({ items }) => {
           <link rel="manifest" href="/manifest.webmanifest" />
         </Head>
         <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
-          <div className="mt-12 space-y-8 text-center lg:mt-24">
-            <h1 className="text-4xl font-bold leading-tight md:text-5xl xl:text-7xl">
-              <span className="text-teal-400">Inspired</span> by culture.{' '}
-              <span className="text-teal-400">Imagined</span> by AI.{' '}
-              <br className="hidden md:block" />
-              One piece <span className="text-teal-400">generated</span> every day.
-            </h1>
-            <a
-              href="#"
-              className="inline-flex items-center justify-center px-4 py-2 text-white transition rounded-full bg-zinc-700 hover:bg-zinc-600"
-            >
-              <AiFillQuestionCircle className="mr-2 text-lg" />
-              How does it work?
-            </a>
-          </div>
-
           <div className="grid max-w-5xl grid-cols-1 mx-auto mt-32 md:grid-cols-2 gap-x-8 gap-y-20">
             {items.map((item, index) => {
               return (
@@ -63,24 +45,20 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               )
             })}
           </div>
-
-          <Button href="/collection" className="mt-12">
-            Browse the collection
-          </Button>
         </div>
       </>
     </Layout>
   )
 }
 
-export default Home
+export default Collection
 
 export async function getServerSideProps() {
   try {
     const client = await clientPromise
     const db = await client.db()
 
-    const items = await db.collection('items').find({}).sort('tokenId', -1).limit(6).toArray()
+    const items = await db.collection('items').find({}).sort('tokenId', -1).toArray()
 
     const itemsFiltered = items.map((item, idx) => {
       return {
