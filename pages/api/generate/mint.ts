@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import clientPromise from '../../../lib/mongodb'
 import { pinMetadata } from '../../../lib/pinata'
 import { MongoDoc, NftMetadata } from '../../../lib/types'
-import dayjs from 'dayjs'
+import { formatZeitgeistDate } from '../../../lib/dateFormat'
 
 type MintNftResponse = {
   success: boolean
@@ -15,15 +15,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
     const mongoClient = await clientPromise
     const db = await mongoClient.db()
 
+    const suffixedDate = formatZeitgeistDate(date as string)
+
     const metadata = {
       description:
         'The Zeitgeist - Inspired by culture. Imagined by AI. One piece generated every day.',
       image: `ipfs://${ipfsImageHash}`,
-      name: `${trend} - ${dayjs(date as string).format('MMMM D, YYYY')}`,
+      name: `${trend} - ${suffixedDate}`,
       attributes: [
         {
           trait_type: 'Date',
-          value: dayjs(date as string).format('MMMM D, YYYY'),
+          value: suffixedDate,
         },
         {
           trait_type: 'Trend',
