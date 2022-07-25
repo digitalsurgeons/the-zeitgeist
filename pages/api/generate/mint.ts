@@ -3,6 +3,8 @@ import clientPromise from '../../../lib/mongodb'
 import { pinMetadata } from '../../../lib/pinata'
 import { MongoDoc, NftMetadata } from '../../../lib/types'
 import { formatZeitgeistDate } from '../../../lib/dateFormat'
+import { authOptions } from '../auth/[...nextauth]'
+import { unstable_getServerSession } from 'next-auth/next'
 
 type MintNftResponse = {
   success: boolean
@@ -10,69 +12,78 @@ type MintNftResponse = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse>) => {
-  try {
-    const { date, trend, headline, prompt, ipfsImageHash, ipfsImageTimestamp } = req.query
-    const mongoClient = await clientPromise
-    const db = await mongoClient.db()
+  const session = await unstable_getServerSession(req, res, authOptions)
 
-    const suffixedDate = formatZeitgeistDate(date as string)
+  if (process.env.DISABLE_AUTH || session) {
+    try {
+      const { date, trend, headline, prompt, ipfsImageHash, ipfsImageTimestamp } = req.query
+      const mongoClient = await clientPromise
+      const db = await mongoClient.db()
 
-    const metadata = {
-      description:
-        'The Zeitgeist - Inspired by culture. Imagined by AI. One piece generated every day.',
-      image: `ipfs://${ipfsImageHash}`,
-      name: `${trend} - ${suffixedDate}`,
-      attributes: [
-        {
-          trait_type: 'Date',
-          value: suffixedDate,
-        },
-        {
-          trait_type: 'Trend',
-          value: trend,
-        },
-        {
-          trait_type: 'Headline',
-          value: headline,
-        },
-        {
-          trait_type: 'Prompt',
-          value: prompt,
-        },
-      ],
-    } as NftMetadata
+      const suffixedDate = formatZeitgeistDate(date as string)
 
-    const pinMetadataResponse = await pinMetadata(metadata, `${trend}-${date}`)
+      const metadata = {
+        description:
+          'The Zeitgeist - Inspired by culture. Imagined by AI. One piece generated every day.',
+        image: `ipfs://${ipfsImageHash}`,
+        name: `${trend} - ${suffixedDate}`,
+        attributes: [
+          {
+            trait_type: 'Date',
+            value: suffixedDate,
+          },
+          {
+            trait_type: 'Trend',
+            value: trend,
+          },
+          {
+            trait_type: 'Headline',
+            value: headline,
+          },
+          {
+            trait_type: 'Prompt',
+            value: prompt,
+          },
+        ],
+      } as NftMetadata
 
-    // this is going to get replaced after minting
-    const tokenId = (await db.collection('items').countDocuments()) + 1
-    // const tokenId = mintNft()
+      const pinMetadataResponse = await pinMetadata(metadata, `${trend}-${date}`)
 
-    const mongoDoc = {
-      tokenId: tokenId,
-      ipfsGateway: process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud',
-      ipfsImageHash: ipfsImageHash,
-      ipfsImageTimestamp: ipfsImageTimestamp,
-      ipfsMetadataHash: pinMetadataResponse.IpfsHash,
-      ipfsMetadataTimestamp: pinMetadataResponse.Timestamp,
-      image: `https://${
-        process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud'
-      }/ipfs/${ipfsImageHash}`,
-      date: date,
-      trend: trend,
-      headline: headline,
-      prompt: prompt,
-    } as MongoDoc
+      // this is going to get replaced after minting
+      const tokenId = (await db.collection('items').countDocuments()) + 1
+      // const tokenId = mintNft()
 
-    const response = await db.collection('items').insertOne(mongoDoc)
+      const mongoDoc = {
+        tokenId: tokenId,
+        ipfsGateway: process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud',
+        ipfsImageHash: ipfsImageHash,
+        ipfsImageTimestamp: ipfsImageTimestamp,
+        ipfsMetadataHash: pinMetadataResponse.IpfsHash,
+        ipfsMetadataTimestamp: pinMetadataResponse.Timestamp,
+        image: `https://${
+          process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud'
+        }/ipfs/${ipfsImageHash}`,
+        date: date,
+        trend: trend,
+        headline: headline,
+        prompt: prompt,
+      } as MongoDoc
 
-    res.json({
-      success: response.acknowledged,
-    })
-  } catch (e) {
-    console.error(e)
+      const response = await db.collection('items').insertOne(mongoDoc)
+
+      res.json({
+        success: response.acknowledged,
+      })
+    } catch (e) {
+      console.error(e)
+      res.json({
+        success: false,
+      })
+    }
+  } else {
     res.json({
       success: false,
+      message: 'Not Authenticated',
     })
   }
 }

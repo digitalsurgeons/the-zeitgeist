@@ -8,12 +8,14 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 const Generate: NextPage = () => {
-  const { data: session, status } = useSession({
-    required: false,
+  // Comment out to disable auth
+  const { status } = useSession({
+    required: true,
     onUnauthenticated() {
       signIn('google')
     },
   })
+
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
   const [trend, setTrend] = useState('')
   const [headline, setHeadline] = useState('')
@@ -90,6 +92,7 @@ const Generate: NextPage = () => {
     signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}` })
   }
 
+  // Comment out to disable auth
   if (status === 'loading') {
     return <p>Loading...</p>
   }
