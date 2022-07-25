@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-// import { unstable_getServerSession } from 'next-auth'
 import clientPromise from '../../../lib/mongodb'
 import { pinMetadata } from '../../../lib/pinata'
 import { MongoDoc, NftMetadata } from '../../../lib/types'
+import dayjs from 'dayjs'
 
 type MintNftResponse = {
   success: boolean
@@ -19,11 +19,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
       description:
         'The Zeitgeist - Inspired by culture. Imagined by AI. One piece generated every day.',
       image: `ipfs://${ipfsImageHash}`,
-      name: `Zeitgeist-${date}`,
+      name: `${trend} - ${dayjs(date as string).format('MMMM D, YYYY')}`,
       attributes: [
         {
           trait_type: 'Date',
-          value: date,
+          value: dayjs(date as string).format('MMMM D, YYYY'),
         },
         {
           trait_type: 'Trend',
