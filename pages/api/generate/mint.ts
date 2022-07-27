@@ -76,7 +76,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
       console.log(Number(tokenId))
 
       const mongoDoc = {
-        tokenId: tokenId,
+        tokenId: Number(tokenId),
         ipfsGateway: process.env.IPFS_GATEWAY,
         ipfsImageHash: ipfsImageHash,
         ipfsImageTimestamp: ipfsImageTimestamp,
