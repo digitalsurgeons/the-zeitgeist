@@ -9,7 +9,7 @@ export const Header = () => {
         href="#"
         className="flex items-center justify-center w-full px-4 py-2 font-bold text-center bg-teal-500"
       >
-        ⏳ Today's auction live on OpenSea... ⌛️
+        ⏳ Today&apos;s auction live on OpenSea... ⌛️
       </a>
       <header className="flex items-center p-12 space-between ">
         <Link href="/" passHref>
