@@ -24,7 +24,9 @@ const Collection: NextPage<CollectionProps> = ({ items }) => {
               return (
                 <a
                   key={index}
-                  href="#"
+                  href={item.openSeaUrl}
+                  target="_blank"
+                  rel="noreferrer"
                   className="block h-full shadow-lg transition duration-300 relative hover:scale-[1.02] border border-t-0 border-zinc-700"
                 >
                   <div className="absolute top-0 left-0 inline-flex items-center justify-center p-6 text-3xl bg-teal-500 text-zinc-700">
@@ -60,13 +62,14 @@ export async function getServerSideProps() {
 
     const items = await db.collection('items').find({}).sort('tokenId', -1).toArray()
 
-    const itemsFiltered = items.map((item, idx) => {
+    const itemsFiltered = items.map((item) => {
       return {
         trend: item.trend,
         prompt: item.prompt,
         image: item.image,
-        tokenId: item.tokenId ?? idx,
+        tokenId: item.tokenId,
         date: item.date,
+        openSeaUrl: `${process.env.NEXT_PUBLIC_OPENSEA_URL}/${process.env.NEXT_PUBLIC_ZEITGEIST_CONTRACT_ADDRESS}/${item.tokenId}`,
       }
     })
 
