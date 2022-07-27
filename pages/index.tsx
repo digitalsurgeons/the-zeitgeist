@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
-import { AiFillQuestionCircle } from 'react-icons/ai'
+import { NextSeo } from 'next-seo'
 import { Layout } from '../components/layout'
 import { Button } from '../components/button'
 
@@ -13,13 +13,15 @@ const Home: NextPage<HomeProps> = ({ items }) => {
   return (
     <Layout>
       <>
-        <Head>
-          <title>The Zeitgeist</title>
-          <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/manifest.webmanifest" />
-        </Head>
+        <NextSeo
+          title="The Zeitgeist - NFT Collection"
+          description="Inspired by culture. Imagined by AI. One piece generated every day."
+          canonical="https://www.zeitgeist.ai/"
+          openGraph={{
+            title: 'The Zeitgeist - NFT Collection',
+            description: 'Inspired by culture. Imagined by AI. One piece generated every day.',
+          }}
+        />
         <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
           <div className="mt-12 space-y-8 text-center lg:mt-24">
             <h1 className="text-4xl font-bold leading-tight md:text-5xl xl:text-7xl">

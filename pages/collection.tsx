@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import clientPromise from '../lib/mongodb'
+import { NextSeo } from 'next-seo'
 import { Layout } from '../components/layout'
 
 type CollectionProps = {
@@ -11,13 +12,15 @@ const Collection: NextPage<CollectionProps> = ({ items }) => {
   return (
     <Layout>
       <>
-        <Head>
-          <title>The Zeitgeist</title>
-          <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/manifest.webmanifest" />
-        </Head>
+        <NextSeo
+          title="The Zeitgeist - NFT Collection"
+          description="View the full Zeitgeist collection, minted on the Ethereum blockchain"
+          canonical="https://www.zeitgeist.ai/"
+          openGraph={{
+            title: 'The Zeitgeist - NFT Collection',
+            description: 'View the full Zeitgeist collection, minted on the Ethereum blockchain',
+          }}
+        />
         <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
           <div className="grid max-w-5xl grid-cols-1 mx-auto mt-32 md:grid-cols-2 gap-x-8 gap-y-20">
             {items.map((item, index) => {
