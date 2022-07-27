@@ -5,12 +5,6 @@ import { FaTwitter, FaInstagram, FaDiscord } from 'react-icons/fa'
 export const Header = () => {
   return (
     <>
-      <a
-        href="#"
-        className="flex items-center justify-center w-full px-4 py-2 font-bold text-center bg-teal-500"
-      >
-        ⏳ Today&apos;s auction live on OpenSea... ⌛️
-      </a>
       <header className="flex items-center p-12 space-between ">
         <Link href="/" passHref>
           <a className="mx-auto font-serif text-2xl text-center cusor-pointer xl:text-left xl:mx-0">
