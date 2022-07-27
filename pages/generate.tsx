@@ -27,7 +27,7 @@ const Generate: NextPage = () => {
   const [ipfsImageTimestamp, setIpfsImageTimestamp] = useState('')
   const [isMinting, setIsMinting] = useState(false)
   const promptFlags =
-    ' :: 16-bit:: 7 Segment Display:: volumetric Light:: Plasma:: watermark::-0.3 blurry::-0.3 cropped::-0.3 --test --video'
+    ' :: 16-bit:: volumetric Light:: Plasma:: watermark::-0.3 blurry::-0.3 cropped::-0.3 --version 3 --video'
   const [promptDate, setPromptDate] = useState(dayjs().subtract(1, 'days').toDate())
 
   const generatePrompt = async () => {

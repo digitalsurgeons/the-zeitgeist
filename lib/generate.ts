@@ -39,7 +39,7 @@ export const generatePrompt = async (headline: string) => {
 
   const response = await openai.createCompletion({
     model: 'text-davinci-002',
-    prompt: `Describe an amazing scene based on the following "${headline}"`,
+    prompt: `Describe a piece of digital art based on "${headline}"`,
     temperature: 0.7,
     max_tokens: 256,
     top_p: 1,

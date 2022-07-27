@@ -92,6 +92,9 @@ export async function getServerSideProps() {
       }
     })
 
+    console.log(items)
+    console.log(itemsFiltered)
+
     return {
       props: { items: itemsFiltered },
     }

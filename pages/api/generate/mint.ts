@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { ethers } from 'ethers'
 import clientPromise from '../../../lib/mongodb'
 import { pinMetadata } from '../../../lib/pinata'
 import { MongoDoc, NftMetadata } from '../../../lib/types'
 import { formatZeitgeistDate } from '../../../lib/dateFormat'
 import { authOptions } from '../auth/[...nextauth]'
 import { unstable_getServerSession } from 'next-auth/next'
+import Zeitgeist from '../../../public/artifacts/Zeitgeist.json'
 
 type MintNftResponse = {
   success: boolean
@@ -49,9 +51,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
 
       const pinMetadataResponse = await pinMetadata(metadata, `${trend}-${date}`)
 
-      // this is going to get replaced after minting
-      const tokenId = (await db.collection('items').countDocuments()) + 1
-      // const tokenId = mintNft()
+      // mint NFT
+      const provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL_RINKEBY)
+      const wallet = new ethers.Wallet(String(process.env.PRIVATE_KEY), provider)
+      // @ts-ignore
+      const signer = wallet.provider.getSigner(wallet.address)
+      const contract = new ethers.Contract(
+        String(process.env.NEXT_PUBLIC_ZEITGEIST_CONTRACT_ADDRESS),
+        Zeitgeist.abi,
+        signer,
+      )
+
+      const tokenId = await contract.callStatic.mintNFT(`ipfs://${pinMetadataResponse.IpfsHash}`)
+
+      const unsignedTx = await contract.populateTransaction.mintNFT(
+        `ipfs://${pinMetadataResponse.IpfsHash}`,
+      )
+
+      const txn = await wallet.sendTransaction(unsignedTx)
+      await txn.wait()
+
+      console.log(unsignedTx)
+      console.log(txn)
+      console.log(Number(tokenId))
 
       const mongoDoc = {
         tokenId: tokenId,
@@ -60,9 +82,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
         ipfsImageTimestamp: ipfsImageTimestamp,
         ipfsMetadataHash: pinMetadataResponse.IpfsHash,
         ipfsMetadataTimestamp: pinMetadataResponse.Timestamp,
-        image: `https://${
-          process.env.IPFS_GATEWAY
-        }/ipfs/${ipfsImageHash}`,
+        image: `https://${process.env.IPFS_GATEWAY}/ipfs/${ipfsImageHash}`,
         date: date,
         trend: trend,
         headline: headline,
