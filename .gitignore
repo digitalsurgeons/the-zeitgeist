@@ -39,4 +39,4 @@ yarn-error.log*
 
 # hardhat files
 cache
-artifacts
+/artifacts
