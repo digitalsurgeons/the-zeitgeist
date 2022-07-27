@@ -55,13 +55,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
 
       const mongoDoc = {
         tokenId: tokenId,
-        ipfsGateway: process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud',
+        ipfsGateway: process.env.IPFS_GATEWAY,
         ipfsImageHash: ipfsImageHash,
         ipfsImageTimestamp: ipfsImageTimestamp,
         ipfsMetadataHash: pinMetadataResponse.IpfsHash,
         ipfsMetadataTimestamp: pinMetadataResponse.Timestamp,
         image: `https://${
-          process.env.IPFS_GATEWAY ?? 'metawallet.mypinata.cloud'
+          process.env.IPFS_GATEWAY
         }/ipfs/${ipfsImageHash}`,
         date: date,
         trend: trend,
