@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<UploadResponse>
     const imageTrend = String(req.query.trend)
     const imageDate = String(req.query.date)
     const imageName = imageTrend + '-' + imageDate + '-' + nanoid(5)
-    const imagePath = path.join('tmp', `${imageName}.png`)
+    const imagePath = path.join('/tmp', `${imageName}.png`)
     const writer = fs.createWriteStream(imagePath)
 
     const response = await axios({
