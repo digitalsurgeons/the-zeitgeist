@@ -1,14 +1,29 @@
-require("@nomiclabs/hardhat-waffle");
+require('@nomiclabs/hardhat-waffle')
+require('dotenv').config()
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners()
 
   for (const account of accounts) {
-    console.log(account.address);
+    console.log(account.address)
   }
-});
+})
+
+task('mintNft', 'Mint NFT')
+  .addParam('tokenuri', 'The token URI')
+  .setAction(async (taskArgs, hre) => {
+    const contract = await hre.ethers.getContractAt(
+      'Zeitgeist',
+      process.env.NEXT_PUBLIC_ZEITGEIST_CONTRACT_ADDRESS,
+    )
+
+    console.log('Minting NFT', taskArgs.tokenuri)
+
+    const txn = await contract.mintNFT(taskArgs.tokenuri)
+    console.log(txn)
+  })
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -17,5 +32,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
-};
+  solidity: '0.8.4',
+  networks: {
+    rinkeby: {
+      url: process.env.ALCHEMY_API_URL_RINKEBY,
+      accounts: [process.env.PRIVATE_KEY],
+    },
+  },
+}
