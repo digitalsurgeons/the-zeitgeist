@@ -204,9 +204,7 @@ const Generate: NextPage = () => {
             <div className="p-6 mt-8 text-base text-gray-400 border-b rounded-lg border-slate-700 bg-slate-800">
               <code>
                 <>
-                  {prompt
-                    ? `/imagine ${prompt + promptFlags}`
-                    : 'Prompt will be added here once generated'}
+                  {prompt ? `${prompt + promptFlags}` : 'Prompt will be added here once generated'}
                 </>
               </code>
             </div>
