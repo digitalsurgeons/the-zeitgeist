@@ -59,7 +59,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               onClick={() => setHowItWorks(true)}
               className="mt-8 transition duration-300 border-b border-dashed border-slate-200 text-slate-200 hover:border-transparent"
             >
-              How does it work?
+              How The Zeitgeist works
             </button>
           </div>
 
