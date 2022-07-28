@@ -6,8 +6,6 @@ import { FaTwitter, FaInstagram } from 'react-icons/fa'
 export const Header = () => {
   const { howItWorks, setHowItWorks } = useHowItWorks()
 
-  console.log(setHowItWorks)
-
   return (
     <>
       <header className="flex items-center p-12 space-between ">

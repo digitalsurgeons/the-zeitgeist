@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import Head from 'next/head'
+import { useHowItWorks } from '../context/howItWorksContext'
 import clientPromise from '../lib/mongodb'
 import { NextSeo } from 'next-seo'
 import { Layout } from '../components/layout'
@@ -10,6 +10,8 @@ type HomeProps = {
 }
 
 const Home: NextPage<HomeProps> = ({ items }) => {
+  const { howItWorks, setHowItWorks } = useHowItWorks()
+
   return (
     <Layout>
       <>
@@ -53,12 +55,12 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 Auction live on OpenSea
               </a>
             </div>
-            <a
-              href="#"
+            <button
+              onClick={() => setHowItWorks(true)}
               className="transition duration-300 border-b border-transparent text-slate-100 hover:border-slate-100"
             >
               How does it work?
-            </a>
+            </button>
           </div>
 
           <div className="grid max-w-5xl grid-cols-1 mx-auto mt-32 md:grid-cols-2 gap-x-8 gap-y-20">
