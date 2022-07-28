@@ -25,16 +25,16 @@ const Home: NextPage<HomeProps> = ({ items }) => {
           }}
         />
         <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
-          <div className="mt-6 space-y-8 text-center lg:mt-24">
+          <div className="mt-6 text-center lg:mt-24">
             <h1 className="text-[2.4rem] font-bold leading-tight md:text-5xl xl:text-7xl">
               <span className="text-teal-400">Inspired</span> by culture.{' '}
               <span className="text-teal-400">Imagined</span> by AI.{' '}
               <br className="hidden md:block" />
               One piece <span className="text-teal-400">generated</span> every day.
             </h1>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-8">
               <a
-                className="flex items-center py-2 pl-2 pr-6 my-6 font-bold transition rounded-full bg-amber-400 hover:bg-amber-300 text-zinc-900"
+                className="flex items-center py-2 pl-2 pr-6 mt-6 font-bold transition rounded-full bg-amber-400 hover:bg-amber-300 text-zinc-900"
                 href={process.env.NEXT_PUBLIC_OPENSEA_COLLECTION_URL}
                 target="_blank"
                 rel="noreferrer"
@@ -57,7 +57,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             </div>
             <button
               onClick={() => setHowItWorks(true)}
-              className="transition duration-300 border-b border-transparent text-slate-100 hover:border-slate-100"
+              className="mt-8 transition duration-300 border-b border-dashed border-slate-200 text-slate-200 hover:border-transparent"
             >
               How does it work?
             </button>
