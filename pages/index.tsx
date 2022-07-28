@@ -25,8 +25,8 @@ const Home: NextPage<HomeProps> = ({ items }) => {
           }}
         />
         <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
-          <div className="mt-12 space-y-8 text-center lg:mt-24">
-            <h1 className="text-4xl font-bold leading-tight md:text-5xl xl:text-7xl">
+          <div className="mt-6 space-y-8 text-center lg:mt-24">
+            <h1 className="text-[2.4rem] font-bold leading-tight md:text-5xl xl:text-7xl">
               <span className="text-teal-400">Inspired</span> by culture.{' '}
               <span className="text-teal-400">Imagined</span> by AI.{' '}
               <br className="hidden md:block" />

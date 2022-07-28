@@ -8,14 +8,14 @@ export const Header = () => {
 
   return (
     <>
-      <header className="flex items-center p-12 space-between ">
+      <header className="flex flex-col items-center px-4 py-8 md:flex-row xl:p-12 space-between ">
         <Link href="/" passHref>
-          <a className="mx-auto font-serif text-2xl text-center cusor-pointer xl:text-left xl:mx-0">
+          <a className="font-serif text-2xl text-left cusor-pointer">
             <img src="/img/logo.svg" />
           </a>
         </Link>
-        <nav className="hidden ml-auto xl:flex">
-          <ul className="flex gap-16 items-center text-lg font-medium translate-y-[1px]">
+        <nav className="flex mt-4 xl:mt-0 md:ml-auto">
+          <ul className="gap-16 items-center text-lg font-medium translate-y-[1px] hidden xl:flex">
             <li>
               <button
                 onClick={() => setHowItWorks(true)}
@@ -32,7 +32,7 @@ export const Header = () => {
               </Link>
             </li>
           </ul>
-          <ul className="flex gap-6 items-center text-lg mx-16 font-medium translate-y-[1px]">
+          <ul className="md:mr-12 xl:mx-16 flex gap-6 items-center text-lg font-medium translate-y-[1px]">
             <li>
               <a
                 href="https://twitter.com/thezeitgeistAI"
@@ -58,6 +58,7 @@ export const Header = () => {
             href={process.env.NEXT_PUBLIC_OPENSEA_COLLECTION_URL}
             target="_blank"
             rel="noreferrer"
+            className="hidden md:flex"
           >
             <>
               <svg
