@@ -34,12 +34,22 @@ export const Header = () => {
           </ul>
           <ul className="flex gap-6 items-center text-lg mx-16 font-medium translate-y-[1px]">
             <li>
-              <a href="#" className="text-white transition duration-300 hover:text-teal-500">
+              <a
+                href="https://twitter.com/thezeitgeistAI"
+                target="_blank"
+                rel="noreferrer"
+                className="text-white transition duration-300 hover:text-teal-500"
+              >
                 <FaTwitter />
               </a>
             </li>
             <li>
-              <a href="#" className="text-white transition duration-300 hover:text-teal-500">
+              <a
+                href="https://www.instagram.com/thezeitgeistai/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-white transition duration-300 hover:text-teal-500"
+              >
                 <FaInstagram />
               </a>
             </li>
