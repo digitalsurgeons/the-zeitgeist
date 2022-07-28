@@ -1,5 +1,6 @@
 import { Header } from '../components/header'
 import { Footer } from '../components/footer'
+import { HowItWorks } from '../components/howItWorks'
 
 type Props = {
   children: JSX.Element
@@ -16,6 +17,7 @@ export const Layout = ({ children }: Props) => {
         {children}
         <Footer />
       </div>
+      <HowItWorks />
     </>
   )
 }

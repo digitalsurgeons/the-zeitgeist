@@ -1,8 +1,13 @@
 import Link from 'next/link'
+import { useHowItWorks } from '../context/howItWorksContext'
 import { Button } from './button'
-import { FaTwitter, FaInstagram, FaDiscord } from 'react-icons/fa'
+import { FaTwitter, FaInstagram } from 'react-icons/fa'
 
 export const Header = () => {
+  const { howItWorks, setHowItWorks } = useHowItWorks()
+
+  console.log(setHowItWorks)
+
   return (
     <>
       <header className="flex items-center p-12 space-between ">
@@ -14,16 +19,16 @@ export const Header = () => {
         <nav className="hidden ml-auto xl:flex">
           <ul className="flex gap-16 items-center text-lg font-medium translate-y-[1px]">
             <li>
-              <a
-                href="#"
-                className="pb-1 transition duration-300 border-b border-transparent hover:border-white"
+              <button
+                onClick={() => setHowItWorks(true)}
+                className="block pb-1 transition duration-300 border-b border-transparent hover:border-white"
               >
                 About The Zeitgeist
-              </a>
+              </button>
             </li>
             <li>
               <Link href="/collection" passHref>
-                <a className="pb-1 transition duration-300 border-b border-transparent hover:border-white">
+                <a className="block pb-1 transition duration-300 border-b border-transparent hover:border-white">
                   The Collection
                 </a>
               </Link>
