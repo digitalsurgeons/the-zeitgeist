@@ -52,7 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<MintNftResponse
       const pinMetadataResponse = await pinMetadata(metadata, `${trend}-${date}`)
 
       // mint NFT
-      const provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL_RINKEBY)
+      const provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL)
       const wallet = new ethers.Wallet(String(process.env.PRIVATE_KEY), provider)
       // @ts-ignore
       const signer = wallet.provider.getSigner(wallet.address)
