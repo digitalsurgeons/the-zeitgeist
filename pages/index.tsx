@@ -85,6 +85,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                       {item.trend}
                       <span className="text-lg text-gray-500">{item.date}</span>{' '}
                     </h3>
+                    <p className="text-lg">{item.prompt}</p>
                   </div>
                 </a>
               )
