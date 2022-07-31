@@ -18,7 +18,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
         <NextSeo
           title="The Zeitgeist - NFT Collection"
           description="Inspired by culture. Imagined by AI. One piece generated every day."
-          canonical="https://www.zeitgeist.ai/"
+          canonical={process.env.NEXT_PUBLIC_BASE_URL}
           openGraph={{
             title: 'The Zeitgeist - NFT Collection',
             description: 'Inspired by culture. Imagined by AI. One piece generated every day.',

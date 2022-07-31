@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
               openGraph={{
                 type: 'website',
                 locale: 'en_IE',
-                url: 'https://www.thezeitgeist.ai/',
+                url: process.env.NEXT_PUBLIC_BASE_URL,
                 site_name: 'The Zeitgeist',
                 images: [
                   {

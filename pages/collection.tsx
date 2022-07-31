@@ -15,7 +15,7 @@ const Collection: NextPage<CollectionProps> = ({ items }) => {
         <NextSeo
           title="The Zeitgeist - NFT Collection"
           description="View the full Zeitgeist collection, minted on the Ethereum blockchain"
-          canonical="https://www.zeitgeist.ai/"
+          canonical={process.env.NEXT_PUBLIC_BASE_URL + '/collection'}
           openGraph={{
             title: 'The Zeitgeist - NFT Collection',
             description: 'View the full Zeitgeist collection, minted on the Ethereum blockchain',
