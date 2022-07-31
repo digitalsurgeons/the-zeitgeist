@@ -22,4 +22,18 @@ contract Zeitgeist is ERC721URIStorage, Ownable {
 
     return newItemId;
   }
+
+  function updateNFT(uint256 tokenId, string memory tokenURI) public onlyOwner returns (uint256) {
+    _setTokenURI(tokenId, tokenURI);
+
+    return tokenId;
+  }
+
+  function withdraw() public payable onlyOwner {
+    uint balance = address(this).balance;
+    require(balance > 0, "No ether left to withdraw");
+
+    (bool success, ) = (msg.sender).call{value: balance}("");
+    require(success, "Transfer failed.");
+  }
 }

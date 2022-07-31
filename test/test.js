@@ -18,4 +18,11 @@ describe('Zeitgeist', function () {
 
     expect(await zeitgeist.balanceOf(addr1.address)).to.equal(3)
   })
+
+  it('Should mint NFT and update the token URI', async function () {
+    await zeitgeist.mintNFT('ipfs://testipfsurl/1')
+    await zeitgeist.updateNFT(1, 'ipfs://testipfsurl/2')
+
+    expect(await zeitgeist.tokenURI(1)).to.equal('ipfs://testipfsurl/2')
+  })
 })
