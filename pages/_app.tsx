@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
             <DefaultSeo
               openGraph={{
                 type: 'website',
-                locale: 'en_IE',
+                locale: 'en_US',
                 url: process.env.NEXT_PUBLIC_BASE_URL,
                 site_name: 'The Zeitgeist',
                 images: [
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                     url: process.env.NEXT_PUBLIC_BASE_URL + '/img/share.jpg',
                     width: 800,
                     height: 600,
-                    alt: 'Og Image Alt',
+                    alt: 'The Zeitgeist',
                     type: 'image/jpeg',
                   },
                 ],
