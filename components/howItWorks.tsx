@@ -60,9 +60,9 @@ export const HowItWorks = () => {
                   <div className="leading-loose text-left md:text-lg">
                     <div className="space-y-6 md:hidden">
                       <p>
-                        Introducing the Zeitgeist.ai, The world's first entirely AI-driven NFT art
-                        collection. Our application scrapes the internet for the most prominent news
-                        trends of the day. It utilizes GPT-3, The largest neural network ever
+                        Introducing the Zeitgeist.ai, The world&apos;s first entirely AI-driven NFT
+                        art collection. Our application scrapes the internet for the most prominent
+                        news trends of the day. It utilizes GPT-3, The largest neural network ever
                         produced, powered by over 175 billion machine learning parameters. The AI
                         takes the trend and crafts a text-based story which is sent to another AI
                         that translates the story into an image that is automatically minted on the
@@ -84,9 +84,9 @@ export const HowItWorks = () => {
                         the blockchain as a unique collectible?
                       </p>
                       <p>
-                        Introducing the Zeitgeist.ai, The world's first entirely AI-driven NFT art
-                        collection. Our application scrapes the internet for the most prominent news
-                        trends of the day. It utilizes GPT-3, The largest neural network ever
+                        Introducing the Zeitgeist.ai, The world&apos;s first entirely AI-driven NFT
+                        art collection. Our application scrapes the internet for the most prominent
+                        news trends of the day. It utilizes GPT-3, The largest neural network ever
                         produced, powered by over 175 billion machine learning parameters. The AI
                         takes the trend and crafts a text-based story which is sent to another AI
                         that translates the story into an image that is automatically minted on the
