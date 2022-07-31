@@ -23,7 +23,8 @@ export const getHeadline = async (date: string, trend: string) => {
     from: date,
     to: date,
     language: 'en',
-    sortBy: 'relevancy',
+    searchIn: 'title',
+    sortBy: 'popularity',
   })
 
   const headline = newsApiReq.articles[0].title
