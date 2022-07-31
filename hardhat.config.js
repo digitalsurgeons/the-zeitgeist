@@ -34,6 +34,10 @@ task('mintNft', 'Mint NFT')
 module.exports = {
   solidity: '0.8.4',
   networks: {
+    mainnet: {
+      url: process.env.ALCHEMY_API_URL_MAINNET,
+      accounts: [process.env.PRIVATE_KEY],
+    },
     rinkeby: {
       url: process.env.ALCHEMY_API_URL_RINKEBY,
       accounts: [process.env.PRIVATE_KEY],
