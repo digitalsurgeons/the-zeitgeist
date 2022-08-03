@@ -35,7 +35,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             <div className="flex justify-center mt-8">
               <a
                 className="flex items-center py-2 pl-2 pr-6 mt-6 font-bold transition rounded-full bg-amber-400 hover:bg-amber-300 text-zinc-900"
-                href={process.env.NEXT_PUBLIC_OPENSEA_COLLECTION_URL}
+                href={`${process.env.NEXT_PUBLIC_OPENSEA_URL}?search%5Btoggles%5D%5B0%5D=ON_AUCTION`}
                 target="_blank"
                 rel="noreferrer"
               >
