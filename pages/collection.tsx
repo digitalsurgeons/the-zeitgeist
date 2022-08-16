@@ -1,14 +1,31 @@
-import { NextPage } from 'next'
-import Head from 'next/head'
-import clientPromise from '../lib/mongodb'
+import { GetServerSideProps, NextPage } from 'next'
 import { NextSeo } from 'next-seo'
+import CollectionCalendar from '../components/collectionCalendar'
 import { Layout } from '../components/layout'
+import { calendarDays } from '../lib/constants'
+import clientPromise from '../lib/mongodb'
 
-type CollectionProps = {
-  items: any[]
+export type CollectionItem = {
+  trend: string
+  prompt: string
+  image: string
+  tokenId: string
+  date: string
+  openSeaUrl: string
 }
 
-const Collection: NextPage<CollectionProps> = ({ items }) => {
+export type CalendarDay = {
+  date: string
+  isCurrentMonth: boolean
+  isSelected: boolean
+  item: CollectionItem | null | undefined
+}
+
+type CollectionProps = {
+  collectionCalendarDays: Array<CalendarDay>
+}
+
+const Collection: NextPage<CollectionProps> = ({ collectionCalendarDays }) => {
   return (
     <Layout>
       <>
@@ -21,9 +38,15 @@ const Collection: NextPage<CollectionProps> = ({ items }) => {
             description: 'View the full Zeitgeist collection, minted on the Ethereum blockchain',
           }}
         />
-        <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
+        <CollectionCalendar calendarDays={collectionCalendarDays} />
+
+        {/* <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
           <div className="grid max-w-5xl grid-cols-1 mx-auto mt-32 md:grid-cols-2 gap-x-8 gap-y-20">
-            {items.map((item, index) => {
+            {collectionCalendarDays.reverse().map((day, index) => {
+              if (!day.item) {
+                return null
+              }
+              const item = day.item
               return (
                 <a
                   key={index}
@@ -50,7 +73,7 @@ const Collection: NextPage<CollectionProps> = ({ items }) => {
               )
             })}
           </div>
-        </div>
+        </div> */}
       </>
     </Layout>
   )
@@ -58,7 +81,7 @@ const Collection: NextPage<CollectionProps> = ({ items }) => {
 
 export default Collection
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps<CollectionProps> = async () => {
   try {
     const client = await clientPromise
     const db = await client.db()
@@ -73,16 +96,26 @@ export async function getServerSideProps() {
         tokenId: item.tokenId,
         date: item.date,
         openSeaUrl: `${process.env.NEXT_PUBLIC_OPENSEA_URL}/${process.env.NEXT_PUBLIC_ZEITGEIST_CONTRACT_ADDRESS}/${item.tokenId}`,
-      }
+      } as CollectionItem
     })
 
+    const collectionDays = calendarDays.map((day) => {
+      const dayItem = itemsFiltered.find((item) => item.date === day.date)
+      return {
+        ...day,
+        item: dayItem ?? null,
+      }
+    }) as Array<CalendarDay>
+
     return {
-      props: { items: itemsFiltered },
+      props: { collectionCalendarDays: collectionDays },
     }
   } catch (e) {
     console.error(e)
     return {
-      props: {},
+      props: {
+        collectionCalendarDays: [],
+      },
     }
   }
 }
