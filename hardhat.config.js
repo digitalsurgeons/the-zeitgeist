@@ -37,7 +37,7 @@ task('updateNft', 'Update NFT URI')
 
     console.log('Updating NFT', taskArgs.tokenid, taskArgs.tokenuri)
 
-    const txn = await contract.updateNFT(2, taskArgs.tokenuri)
+    const txn = await contract.updateNFT(Number(taskArgs.tokenid), taskArgs.tokenuri)
     console.log(txn)
   })
 
