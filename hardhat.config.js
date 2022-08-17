@@ -26,6 +26,21 @@ task('mintNft', 'Mint NFT')
     console.log(txn)
   })
 
+task('updateNft', 'Update NFT URI')
+  .addParam('tokenid', 'The token ID to update')
+  .addParam('tokenuri', 'The new token URI')
+  .setAction(async (taskArgs, hre) => {
+    const contract = await hre.ethers.getContractAt(
+      'Zeitgeist',
+      process.env.NEXT_PUBLIC_ZEITGEIST_CONTRACT_ADDRESS,
+    )
+
+    console.log('Updating NFT', taskArgs.tokenid, taskArgs.tokenuri)
+
+    const txn = await contract.updateNFT(2, taskArgs.tokenuri)
+    console.log(txn)
+  })
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
