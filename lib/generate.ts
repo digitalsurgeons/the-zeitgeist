@@ -23,7 +23,6 @@ export const getHeadline = async (date: string, trend: string) => {
     from: date,
     to: date,
     language: 'en',
-    searchIn: 'title',
     sortBy: 'popularity',
   })
 
