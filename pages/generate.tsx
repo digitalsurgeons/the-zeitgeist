@@ -2,6 +2,7 @@ import { DatePicker } from '@mantine/dates'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -16,6 +17,7 @@ const Generate: NextPage = () => {
     },
   })
 
+  const router = useRouter()
   const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false)
   const [trend, setTrend] = useState('')
   const [headline, setHeadline] = useState('')
@@ -33,10 +35,15 @@ const Generate: NextPage = () => {
   const generatePrompt = async () => {
     setIsGeneratingPrompt(true)
 
-    const generatePromptReq = await fetch(
+    let url =
       process.env.NEXT_PUBLIC_BASE_URL +
-        `/api/generate/prompt?date=${dayjs(promptDate).format('YYYY-MM-DD')}`,
-    )
+      `/api/generate/prompt?date=${dayjs(promptDate).format('YYYY-MM-DD')}`
+
+    if (router.query.trend) {
+      url += `&trend=${router.query.trend}`
+    }
+
+    const generatePromptReq = await fetch(url)
 
     const generatePrompt = await generatePromptReq.json()
 
