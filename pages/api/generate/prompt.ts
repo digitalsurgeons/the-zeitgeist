@@ -8,12 +8,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await unstable_getServerSession(req, res, authOptions)
 
   if (process.env.DISABLE_AUTH || session) {
-    console.log(session)
+    const trendOverride = req.query.trend
     const date = req.query.date
       ? String(req.query.date)
       : `${dayjs().subtract(1, 'days').format('YYYY-MM-DD')}`
 
-    const trend = await getTrend(date)
+    const trend = trendOverride ? trendOverride : await getTrend(date)
     const headline = await getHeadline(date, trend)
     const prompt = await generatePrompt(headline)
 
