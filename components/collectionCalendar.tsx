@@ -19,8 +19,8 @@ const CollectionCalendar = ({ calendarDays }: CollectionCalendarProps) => {
 
   return (
     <>
-      <div className="flex flex-col justify-center px-4 mx-auto max-w-8xl">
-        <header className="relative z-20 flex items-center justify-between px-6 py-4 border-b border-gray-200 lg:flex-none">
+      <div className="mx-auto flex max-w-8xl flex-col justify-center bg-zinc-900 px-4 focus:ring-teal-500">
+        <header className="relative z-20 flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
           <h1 className="text-lg font-semibold text-white">
             <time dateTime="2022-08">August 2022</time>
           </h1>
@@ -28,63 +28,68 @@ const CollectionCalendar = ({ calendarDays }: CollectionCalendarProps) => {
             <div className="flex items-center rounded-md shadow-sm md:items-stretch">
               <button
                 type="button"
-                className="flex items-center justify-center py-2 pl-3 pr-4 text-gray-400 bg-white border border-r-0 border-gray-300 rounded-l-md hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+                className="flex items-center justify-center rounded-l-md border border-r-0 border-zinc-700 bg-black py-2 pl-3 pr-4 text-gray-400 hover:text-teal-500 focus:relative md:w-9 md:px-2"
               >
                 <span className="sr-only">Previous month</span>
-                <HiChevronLeft className="w-5 h-5" aria-hidden="true" />
+                <HiChevronLeft className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
                 type="button"
-                className="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block"
-              >
-                Today
-              </button>
-              <span className="relative w-px h-5 -mx-px bg-gray-300 md:hidden" />
-              <button
-                type="button"
-                className="flex items-center justify-center py-2 pl-4 pr-3 text-gray-400 bg-white border border-l-0 border-gray-300 rounded-r-md hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+                className="flex items-center justify-center rounded-r-md border border-l-0 border-zinc-700 bg-black py-2 pl-4 pr-3 text-gray-400 hover:text-teal-500 focus:relative md:w-9 md:px-2"
               >
                 <span className="sr-only">Next month</span>
-                <HiChevronRight className="w-5 h-5" aria-hidden="true" />
+                <HiChevronRight className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>
         </header>
 
-        <div className="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
-          <div className="grid grid-cols-7 gap-px text-xs font-semibold leading-6 text-center text-gray-700 bg-gray-200 border-b border-gray-300 lg:flex-none">
-            <div className="py-2 bg-white">
+        <div className="bg-black shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
+          <div className="grid grid-cols-7 gap-px border-b border-zinc-700 bg-zinc-700 text-center text-xs font-semibold leading-6 lg:flex-none">
+            <div className="bg-black py-2  text-white">
               S<span className="sr-only sm:not-sr-only">un</span>
             </div>
-            <div className="py-2 bg-white">
+            <div className="bg-black py-2 text-white">
               M<span className="sr-only sm:not-sr-only">on</span>
             </div>
-            <div className="py-2 bg-white">
+            <div className="bg-black py-2 text-white">
               T<span className="sr-only sm:not-sr-only">ue</span>
             </div>
-            <div className="py-2 bg-white">
+            <div className="bg-black py-2 text-white">
               W<span className="sr-only sm:not-sr-only">ed</span>
             </div>
-            <div className="py-2 bg-white">
+            <div className="bg-black py-2 text-white">
               T<span className="sr-only sm:not-sr-only">hu</span>
             </div>
-            <div className="py-2 bg-white">
+            <div className="bg-black py-2 text-white">
               F<span className="sr-only sm:not-sr-only">ri</span>
             </div>
-            <div className="py-2 bg-white">
+            <div className="bg-black py-2 text-white">
               S<span className="sr-only sm:not-sr-only">at</span>
             </div>
           </div>
-          <div className="flex text-xs leading-6 text-gray-700 bg-gray-200 lg:flex-auto">
-            <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+          <div className="flex text-xs leading-6 lg:flex-auto">
+            <div className="hidden w-full bg-zinc-700 lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
               {calendarDays.map((day, idx) => (
-                <div key={idx} className={classNames('bg-white relative py-2 px-3')}>
-                  <time dateTime={day.date}>
+                <div
+                  key={idx}
+                  className={classNames(
+                    'relative py-2 px-3',
+                    day.isCurrentMonth ? 'bg-black text-white ' : 'bg-zinc-900 text-gray-600',
+                  )}
+                >
+                  <time
+                    dateTime={day.date}
+                    className={classNames(
+                      day.isCurrentMonth ? 'text-teal-500' : 'text-white',
+                      'text-sm',
+                    )}
+                  >
                     {day.date.split('-').pop()?.replace(/^0/, '') ?? ''}
                   </time>
                   <div>
                     <button
-                      className="hover:text-blue-200"
+                      className="rounded-full px-2 hover:bg-teal-500 hover:text-black"
                       onClick={() => {
                         setActiveItem(day.item ?? undefined)
                         setIsOpen(true)
@@ -96,7 +101,7 @@ const CollectionCalendar = ({ calendarDays }: CollectionCalendarProps) => {
                 </div>
               ))}
             </div>
-            <div className="grid w-full grid-cols-7 grid-rows-6 gap-px isolate lg:hidden">
+            <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
               {/* {days.map((day) => (
               <button
                 key={day.date}
