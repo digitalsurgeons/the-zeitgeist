@@ -58,22 +58,7 @@ export const HowItWorks = () => {
                     geist&rdquo;
                   </h2>
                   <div className="leading-loose text-left md:text-lg">
-                    <div className="space-y-6 md:hidden">
-                      <p>
-                        Introducing the Zeitgeist.ai, The world&apos;s first entirely AI-driven NFT
-                        art collection. Our application scrapes the internet for the most prominent
-                        news trends of the day. It utilizes GPT-3, The largest neural network ever
-                        produced, powered by over 175 billion machine learning parameters. The AI
-                        takes the trend and crafts a text-based story which is sent to another AI
-                        that translates the story into an image that is automatically minted on the
-                        Ethereum blockchain.
-                      </p>
-                      <p>
-                        Please help us expand the potential of a co-created artistic future between
-                        man and machines by collecting a moment from the collection.{' '}
-                      </p>
-                    </div>
-                    <div className="hidden space-y-6 md:block">
+                    <div className="space-y-6 h-[50vh] lg:h-auto overflow-auto">
                       <p>
                         AI is changing the world. One moment and experience at a time. These
                         defining moments capture the essence or mood of a particular moment in time.
@@ -84,27 +69,39 @@ export const HowItWorks = () => {
                         the blockchain as a unique collectible?
                       </p>
                       <p>
-                        Introducing the Zeitgeist.ai, The world&apos;s first entirely AI-driven NFT
-                        art collection. Our application scrapes the internet for the most prominent
-                        news trends of the day. It utilizes GPT-3, The largest neural network ever
-                        produced, powered by over 175 billion machine learning parameters. The AI
-                        takes the trend and crafts a text-based story which is sent to another AI
-                        that translates the story into an image that is automatically minted on the
-                        Ethereum blockchain.
+                        Introducing the Zeitgeist.ai, The world's first entirely AI-driven NFT art
+                        collection.
+                      </p>
+
+                      <p>
+                        From July 23rd, 2022 to February 27th, 2023, we generated 222 collectibles,
+                        each representing the top news headline of its respective date, as
+                        interpreted by AI, and forever memorialized on the Ethereum blockchain.
+                      </p>
+
+                      <p>
+                        The Zeitgeist functioned through a custom application that scraped the
+                        internet for the most prominent news trends of the day. It utilized GPT-3,
+                        the largest neural network ever produced, powered by over 175 billion
+                        machine learning parameters. The AI then took the trend and crafted a
+                        text-based story, which was sent to another AI, that translated the story
+                        into an image that was automatically minted on the Ethereum blockchain.
+                      </p>
+
+                      <p>
+                        The Zeitgeist finishes with a total of 222 pieces, a number that represents
+                        balance, harmony, and manifestation. According to numerologists, the number
+                        222 is a sign that you are on the right path in life and that your thoughts
+                        and intentions are aligning with your true purpose.
+                      </p>
+
+                      <p>
+                        This is a number that is close to the heart of The Zeitgeist creators: two
+                        forward-obsessed creative technologists and their AI friends.
                       </p>
                       <p>
-                        Brought to you by two forward-obsessed creative technologists and their AI
-                        friends.
-                      </p>
-                      <p>
-                        We hope to launch a roadmap soon that, pending your support, can help to
-                        further fund our contributions to the arts and other STEM-based programs. We
-                        believe that exploring new mediums of thought will enable the imaginative
-                        powers of the human species.
-                      </p>
-                      <p>
-                        Please help us expand the potential of a co-created artistic future between
-                        man and machines by collecting a moment from the collection.{' '}
+                        Thank you to everyone who supported the project. You are not only a part of
+                        The Zeitgeist, but a part of the history of humanity.
                       </p>
                     </div>
                   </div>
