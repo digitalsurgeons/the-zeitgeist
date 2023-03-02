@@ -102,6 +102,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 playsInline
                 loop
                 muted
+                poster="/img/222.jpg"
                 className="object-cover w-full h-full max-w-[1000px] mx-auto"
               >
                 <source src="/video/222.webm" type="video/webm" />
