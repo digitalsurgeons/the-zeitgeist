@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
+import Image from 'next/image'
 import { useHowItWorks } from '../context/howItWorksContext'
 import clientPromise from '../lib/mongodb'
 import { NextSeo } from 'next-seo'
 import { Layout } from '../components/layout'
-import { Button } from '../components/button'
 import Link from 'next/link'
 
 type HomeProps = {
@@ -90,38 +90,15 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             </div>
           </div>
 
-          <div className="grid max-w-5xl grid-cols-1 mx-auto mt-32 md:grid-cols-2 gap-x-8 gap-y-20">
-            {items.map((item, index) => {
-              return (
-                <a
-                  key={index}
-                  href={item.openSeaUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block h-full shadow-lg transition duration-300 relative hover:scale-[1.02] border border-t-0 border-zinc-700"
-                >
-                  <div className="absolute top-0 left-0 inline-flex items-center justify-center p-6 text-3xl bg-teal-500 text-zinc-700">
-                    #
-                    <span className="font-serif -translate-y-[5px] text-black font-bold">
-                      {item.tokenId}
-                    </span>
-                  </div>
-                  <img src={item.image} />
-                  <div className="p-6 space-y-4 text-white">
-                    <h3 className="flex justify-between mt-2 mb-1 text-xl font-bold">
-                      {item.trend}
-                      <span className="text-lg text-gray-500">{item.date}</span>{' '}
-                    </h3>
-                    <p className="text-lg">{item.prompt}</p>
-                  </div>
-                </a>
-              )
-            })}
+          <div className="relative flex items-center justify-center w-full h-full mt-16">
+            <a
+              href="https://opensea.io/assets/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/43347402646563209786926491996885735443290871720335129623012736052801996587009"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image src="/img/222.jpg" width={1192} height={1192} />
+            </a>
           </div>
-
-          <Button href="/collection" className="mt-12">
-            Browse the collection
-          </Button>
         </div>
       </>
     </Layout>
