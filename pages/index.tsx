@@ -52,14 +52,14 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                     <path
                       d="M14.6687 13C14.6687 13.9217 13.9215 14.6689 12.9997 14.6689C12.078 14.6689 11.3308 13.9217 11.3308 13C11.3308 12.0783 12.078 11.3311 12.9997 11.3311C13.9215 11.3311 14.6687 12.0783 14.6687 13Z"
                       stroke="#262626"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M7.69167 13C8.40055 10.743 10.5091 9.1059 13 9.1059C15.4909 9.1059 17.5995 10.743 18.3083 13C17.5995 15.257 15.4909 16.8941 13 16.8941C10.5091 16.8941 8.40053 15.257 7.69167 13Z"
                       stroke="#262626"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                   View the Gallery
@@ -81,8 +81,8 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                   <path
                     d="M17.2974 14.9833C17.1359 14.8218 16.9302 14.7117 16.7062 14.6669L15.3249 14.3906C14.568 14.2392 13.7822 14.3445 13.0918 14.6897L12.9082 14.7815C12.2178 15.1267 11.432 15.2319 10.6751 15.0805L9.55751 14.857C9.17816 14.7811 8.78599 14.8999 8.51243 15.1734M10.6859 8.37177H15.3141L14.7356 8.95029V11.9422C14.7356 12.2491 14.8575 12.5434 15.0745 12.7604L17.9671 15.653C18.696 16.3819 18.1798 17.6282 17.149 17.6282H8.85104C7.82021 17.6282 7.30397 16.3819 8.03288 15.653L10.9255 12.7604C11.1425 12.5434 11.2644 12.2491 11.2644 11.9422V8.95029L10.6859 8.37177Z"
                     stroke="#262626"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 How The Zeitgeist was made
@@ -96,7 +96,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               target="_blank"
               rel="noreferrer"
             >
-              <Image src="/img/222.jpg" width={1192} height={1192} />
+              <Image src="/img/222.jpg" alt="222 days of history" width={1192} height={1192} />
             </a>
           </div>
         </div>

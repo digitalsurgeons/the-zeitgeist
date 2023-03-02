@@ -69,8 +69,8 @@ export const HowItWorks = () => {
                         the blockchain as a unique collectible?
                       </p>
                       <p>
-                        Introducing the Zeitgeist.ai, The world's first entirely AI-driven NFT art
-                        collection.
+                        Introducing the Zeitgeist.ai, The world&apos;s first entirely AI-driven NFT
+                        art collection.
                       </p>
 
                       <p>
