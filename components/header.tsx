@@ -15,7 +15,7 @@ export const Header = () => {
           </a>
         </Link>
         <nav className="flex mt-4 xl:mt-0 md:ml-auto">
-          <ul className="gap-16 items-center text-lg font-medium translate-y-[1px] hidden xl:flex">
+          <ul className="gap-16 items-center text-lg font-medium translate-y-[1px] hidden lg:flex">
             <li>
               <Link href="/collection" passHref>
                 <a className="block pb-1 transition duration-300 border-b border-transparent hover:border-white">
@@ -32,7 +32,7 @@ export const Header = () => {
               </button>
             </li>
           </ul>
-          <a className="flex items-center py-[6px] pl-2 pr-6 ml-14 font-medium transition rounded-full bg-teal-400 hover:bg-teal-300 text-zinc-900">
+          <a className="hidden md:flex items-center py-[6px] pl-2 pr-6 ml-14 font-medium transition rounded-full bg-teal-400 hover:bg-teal-300 text-zinc-900">
             <svg
               width="26"
               height="26"
