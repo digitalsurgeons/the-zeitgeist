@@ -7,7 +7,11 @@ export const Footer = () => {
         &copy; {new Date().getFullYear()} The Zeitgeist. All rights reserved.
         <br />
         Made with love by{' '}
-        <a className="text-teal-400" href="https://www.digitalsurgeons.com/">
+        <a
+          className="text-teal-400"
+          href="https://www.digitalsurgeons.com/"
+          title="Brand Innovation Agency and Design Studio"
+        >
           Digital Surgeons
         </a>
         .
