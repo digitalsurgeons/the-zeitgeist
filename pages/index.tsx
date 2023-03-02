@@ -97,7 +97,13 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               rel="noreferrer"
             >
               {/* <Image src="/img/222.jpg" alt="222 days of history" width={1192} height={1192} /> */}
-              <video autoPlay playsInline loop muted className="object-cover w-full h-full">
+              <video
+                autoPlay
+                playsInline
+                loop
+                muted
+                className="object-cover w-full h-full max-w-[1000px] mx-auto"
+              >
                 <source src="/video/222.webm" type="video/webm" />
                 Your browser does not support the video tag.
               </video>
