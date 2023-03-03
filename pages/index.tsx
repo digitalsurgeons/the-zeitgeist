@@ -106,6 +106,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 className="object-cover w-full h-full max-w-[1000px] mx-auto"
               >
                 <source src="/video/222.webm" type="video/webm" />
+                <source src="/video/222.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </a>
