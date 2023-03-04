@@ -32,7 +32,12 @@ export const Header = () => {
               </button>
             </li>
           </ul>
-          <a className="hidden md:flex items-center py-[6px] pl-2 pr-6 ml-14 font-medium transition rounded-full bg-teal-400 hover:bg-teal-300 text-zinc-900">
+          <a
+            href="https://opensea.io/collection/thezeitgeist"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden md:flex items-center py-[6px] pl-2 pr-6 ml-14 font-medium transition rounded-full bg-teal-400 hover:bg-teal-300 text-zinc-900"
+          >
             <svg
               width="26"
               height="26"
